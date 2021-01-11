@@ -1,0 +1,12 @@
+html, body, #___gatsby, div[tabindex] {
+  height: 100%;
+  background-color: #FAEBEF;
+}
+
+html::-webkit-scrollbar {
+  background-color: #FAEBEF;
+}
+
+body {
+  margin: 0px;
+}
