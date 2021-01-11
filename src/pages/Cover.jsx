@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite';
 
+// 페이지 스크롤 버그 제거
 export default () => (
   <div className={css(styles.backgruond)}>
     <div className={css(styles.card)}>
