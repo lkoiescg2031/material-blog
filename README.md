@@ -3,10 +3,14 @@
 ## 블로그 기능 명세
   시작화면 구성
 
-  1. 바탕 + businessCard 로 구성
+  1. 바탕 + businessCard 으로 구성 :heavy_check_mark:
   2. businessCard 는 앞면, 뒷면 으로 구성
-  3. 앞면 카드에서 클릭시 후면으로 이동 및 에니메이션 추가
+     1. 앞면 카드 구현 :heavy_check_mark:
+     2. 뒷면 카드 구헌
+  3. 앞면 카드에서 클릭시 후면으로 이동 및 에니메이션 추가 :heavy_check_mark:
   4. 뒷면에서 클릭시 블로그 홈으로 진입
+  5. 마우스 커서를 따라 명함이 이동 :heavy_check_mark:
+  6. 데이터 값 주입
   
   블로그 홈
   
