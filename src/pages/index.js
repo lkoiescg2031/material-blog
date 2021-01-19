@@ -1,5 +1,10 @@
 import React from 'react';
-import Cover from './cover';
+import { navigate } from 'gatsby';
+
+export default () => {
+  navigate('/Landing');
+  return null;
+};
 
 // import {Link} from 'gatsby';
 
@@ -21,10 +26,3 @@ import Cover from './cover';
 //     <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
 //   </Layout>
 // );
-
-const IndexPage = () => (
-  <Cover />
-  // <h1>Helloworld</h1>
-) 
-
-export default IndexPage;
