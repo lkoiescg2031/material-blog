@@ -15,11 +15,11 @@
   블로그 홈
   
   1. 상단에 material-ui를 이용한 카테고리 바 추가
-  2. 카테고리 항목 추가 ( 항목 : challenges, toy projects, resume, posts, contact)
+  2. 카테고리 항목 추가 ( 항목 : challenges, projects, resume, posts, contact)
   3. challenges 카테고리 
      1. 첼린지 제목 및 간단한 설명 추가
      2. 진행 기간 및 달성도를 파악 할 수 있는 UI 추가
-     3. 클릭 시 첼린지 제목, 상세 설명, 상세 내용을 볼 수 있도록 추가 
+     3. 클릭 시 첼린지 제목, 상세 설명, 상세 내용을 볼 수 있도록 추가
   4. toy projects 카테고리
      1. 프로젝트 제목 및 작업 기간 추가
      2. 소스코드 링크 기능 추가
