@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { StyleSheet, css } from 'aphrodite';
 import color from '../styles/color';
 
 /**
  * global styles
  */
-
 const globalStyles = StyleSheet.create({
   card: {
     height: '100%',
@@ -31,6 +32,7 @@ const globalStyles = StyleSheet.create({
 });
 
 /**
+ * 명함 앞면
  * Card Template 1
  */
 export const CardTemplate1 = ({ title, subTitle, hasButton, onClick }) => (
@@ -53,6 +55,18 @@ export const CardTemplate1 = ({ title, subTitle, hasButton, onClick }) => (
     )}
   </div>
 );
+
+CardTemplate1.propTypes = {
+  title: PropTypes.string,
+  subTitle: PropTypes.string,
+  hasButton: PropTypes.bool,
+  onClick: PropTypes.func,
+};
+
+CardTemplate1.defaultProps = {
+  hasButton: false,
+  onClick: () => {},
+};
 
 const CardTemplate1Styles = StyleSheet.create({
   card: {
@@ -82,24 +96,59 @@ const CardTemplate1Styles = StyleSheet.create({
   },
 });
 
-export const CardTemplate2 = () => (
+/**
+ * 명함 뒷면
+ */
+export const CardTemplate2 = ({
+  figure,
+  name,
+  position,
+  email,
+  blog,
+  github,
+  facebook,
+  twitter,
+  instagram,
+  linkedIn,
+}) => (
   <div className={css(globalStyles.card, CardTemplate2Style.card)}>
     <div
       className={css(CardTemplate2Style.inner, CardTemplate2Style.rightLine)}
     >
-      <i className={css(CardTemplate2Style.figure)}></i>
-      <h3>Taehong Kim</h3>
-      <h5>Developer</h5>
+      <img className={css(CardTemplate2Style.figure)} src={figure}></img>
+      <h3>{name}</h3>
+      <h5>{position}</h5>
     </div>
     <div className={css(CardTemplate2Style.inner, CardTemplate2Style.leftLine)}>
-      <i className={css(CardTemplate2Style.qrCode)}></i>
-      <h5>email: lkoiescg2031@naver.com</h5>
-      <h5>webPage: lkoiescg2031.netrify.com</h5>
-      <h5>github: lkoiescg2031</h5>
-      <h5>facebook: lkoiescg2031</h5>
+      <div className={css(CardTemplate2Style.inline)}>
+        {email && <h5>{email}</h5>}
+        {github && <h5>{github}</h5>}
+        {twitter && <h5>{twitter}</h5>}
+        {facebook && <h5>{facebook}</h5>}
+        {instagram && <h5>{instagram}</h5>}
+        {linkedIn && <h5>{linkedIn}</h5>}
+      </div>
     </div>
+    {blog && (
+      <a role="button" href={blog}>
+        {blog}
+      </a>
+    )}
   </div>
 );
+
+CardTemplate2.propTypes = {
+  figure: PropTypes.string,
+  name: PropTypes.string,
+  position: PropTypes.string,
+  email: PropTypes.string,
+  blog: PropTypes.string,
+  github: PropTypes.string,
+  facebook: PropTypes.string,
+  twitter: PropTypes.string,
+  instagram: PropTypes.string,
+  linkedIn: PropTypes.string,
+};
 
 const CardTemplate2Style = StyleSheet.create({
   card: {
@@ -113,6 +162,9 @@ const CardTemplate2Style = StyleSheet.create({
     margin: '0px auto 15px auto',
     backgroundColor: color.secondaryColor,
     borderRadius: '100%',
+  },
+  inline: {
+    display: 'inline',
   },
   inner: {
     display: 'flex',
@@ -135,6 +187,7 @@ const CardTemplate2Style = StyleSheet.create({
     '@media screen and (max-width: 500px)': {
       paddingLeft: 0,
       paddingTop: '15px',
+      textAlign: 'center',
     },
   },
 });

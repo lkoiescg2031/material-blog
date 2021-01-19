@@ -30,8 +30,6 @@ export default class MouseEffectLayout extends PureComponent {
       const moveX = (clientX - offsetWidth / 2) * movingRate;
       const moveY = (clientY - offsetHeight / 2) * movingRate;
 
-      console.log(moveX, moveY, offsetWidth, offsetHeight);
-
       target.style.transform = `translate(${moveX}px, ${moveY}px)`;
     };
   }
