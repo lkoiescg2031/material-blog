@@ -18,37 +18,48 @@ export default class BusinessCard extends PureComponent {
     this.businessCardRef = React.createRef();
     this.state = { currentCardIdx: 0 };
     this.changeTo = this.changeTo.bind(this);
+    this.hideBusinessCardAnimation = this.hideBusinessCardAnimation.bind(this);
+    this.showBusinessCardAnimation = this.showBusinessCardAnimation.bind(this);
+  }
+
+  hideBusinessCardAnimation() {
+    const animation = this.businessCardRef.current.animate(
+      [
+        { transform: 'rotate3D(0.5, 0.5, 0, 0deg)' },
+        { transform: 'rotate3D(0.5, 0.5, 0, 90deg)' },
+      ],
+      450,
+    ).finished;
+
+    return animation;
+  }
+
+  showBusinessCardAnimation() {
+    const animation = this.businessCardRef.current.animate(
+      [
+        { transform: 'rotate3D(0.5, 0.5, 0, 90deg)' },
+        { transform: 'rotate3D(0.5, 0.5, 0, 0deg)' },
+      ],
+      220,
+    ).finished;
+
+    return animation;
   }
 
   async changeTo(number) {
-    if (typeof number !== 'undefined' && typeof number !== 'number') {
-      throw 'number parameter must be number or undefined type';
-    } else if (typeof number === 'undefined') {
+    //번호 미입력시 보정
+    if (typeof number === 'undefined') {
       const lastNumber = this.props.children(this.changeTo).props.children
         .length;
       const currentIdx = this.state.currentCardIdx;
       number = (currentIdx + 1) % lastNumber;
     }
 
-    await this.businessCardRef.current.animate(
-      [
-        { transform: 'rotate3D(0.5, 0.5, 0, 0deg)' },
-        { transform: 'rotate3D(0.5, 0.5, 0, 90deg)' },
-      ],
-      480,
-    ).finished;
+    await this.hideBusinessCardAnimation();
 
     this.setState(
       prevState => ({ ...prevState, currentCardIdx: number }),
-      async () => {
-        await this.businessCardRef.current.animate(
-          [
-            { transform: 'rotate3D(0.5, 0.5, 0, 90deg)' },
-            { transform: 'rotate3D(0.5, 0.5, 0, 0deg)' },
-          ],
-          220,
-        ).finished;
-      },
+      this.showBusinessCardAnimation,
     );
   }
 
@@ -74,5 +85,10 @@ const styles = StyleSheet.create({
     borderRadius: '15px',
     boxShadow: '3px 3px 3px 2px gray',
     color: color.secondaryColor,
+    '@media screen and (max-width: 500px)': {
+      width: '100vw',
+      height: '100vh',
+      borderRadius: '0px',
+    },
   },
 });

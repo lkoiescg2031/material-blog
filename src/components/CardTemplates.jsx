@@ -72,6 +72,8 @@ const CardTemplate1Styles = StyleSheet.create({
     backgroundColor: '#00000000',
     color: color.secondaryColor,
 
+    cursor: 'pointer',
+
     position: 'absolute',
     bottom: '0px',
     ':focus': {
@@ -102,6 +104,7 @@ export const CardTemplate2 = () => (
 const CardTemplate2Style = StyleSheet.create({
   card: {
     display: 'flex',
+    flexFlow: 'column wrap',
     justifyContent: 'center',
   },
   figure: {
@@ -113,14 +116,25 @@ const CardTemplate2Style = StyleSheet.create({
   },
   inner: {
     display: 'flex',
-    flexDirection: 'column',
+    flexFlow: 'column',
     justifyContent: 'center',
   },
   rightLine: {
     paddingRight: '15px',
     borderRight: `1px solid ${color.secondaryColor}`,
+    '@media screen and (max-width : 500px)': {
+      paddingRight: 0,
+      paddingBottom: '15px',
+      borderRight: 0,
+      borderBottom: `1px solid ${color.secondaryColor}`,
+      textAlign: 'center',
+    },
   },
   leftLine: {
     paddingLeft: '15px',
+    '@media screen and (max-width: 500px)': {
+      paddingLeft: 0,
+      paddingTop: '15px',
+    },
   },
 });
