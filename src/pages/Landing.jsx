@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql, navigate } from 'gatsby';
 
-import MouseEffectLayout from '../components/MouseEffectLayout';
+import MouseEffectLayout from '../layout/MouseEffectLayout';
 import BusinessCard, {
   CardTemplate1,
   CardTemplate2,
