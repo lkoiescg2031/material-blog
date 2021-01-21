@@ -1,46 +1,50 @@
 import React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, navigate } from 'gatsby';
 
 import MouseEffectLayout from '../components/MouseEffectLayout';
-import BusinessCard from '../components/BusinessCard';
-import { CardTemplate1, CardTemplate2 } from '../components/CardTemplates';
+import BusinessCard, {
+  CardTemplate1,
+  CardTemplate2,
+} from '../components/BusinessCard';
 
-export default ({ data }) => {
+const LandingPage = ({ data }) => {
   const { siteMetadata } = data.site;
   const { user } = siteMetadata;
+
+  const moveToHome = () => {
+    navigate('/Home');
+  };
 
   return (
     <MouseEffectLayout>
       <BusinessCard>
-        {changeTo => (
-          <>
-            <CardTemplate1
-              title={siteMetadata.title}
-              subTitle={siteMetadata.description}
-              hasButton
-              onClick={e => {
-                changeTo();
-              }}
-            />
-            <CardTemplate2
-              figure={user.figure}
-              name={user.name}
-              position={user.position}
-              email={user.email}
-              blog={user.blog}
-              github={user.github}
-              facebook={user.facebook}
-              linkedIn={user.linkedIn}
-              twitter={user.twitter}
-              instagram={user.instagram}
-            />
-          </>
-        )}
+        <CardTemplate1
+          title={siteMetadata.title}
+          subTitle={siteMetadata.description}
+          hasNextButton
+        />
+        <CardTemplate2
+          name={user.name}
+          figure={user.figure}
+          position={user.position}
+          email={user.email}
+          blog={user.blog}
+          github={user.github}
+          //sns options
+          facebook={user.facebook}
+          linkedIn={user.linkedIn}
+          twitter={user.twitter}
+          instagram={user.instagram}
+          //homebutton options
+          hasNextButton
+          homeButtonCallback={moveToHome}
+        />
       </BusinessCard>
     </MouseEffectLayout>
   );
 };
 
+export default LandingPage;
 export const siteMetadata = graphql`
   {
     site {
