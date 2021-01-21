@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
 import { StyleSheet, css } from 'aphrodite';
-import color from '../styles/color';
+
+import color from '../../styles/color';
+
+import { Provider } from './context';
 
 export default class BusinessCard extends PureComponent {
   static propTypes = {
-    children: PropTypes.func,
+    children: PropTypes.node,
   };
 
-  static defaultProps = {
-    children: () => {},
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -49,8 +49,7 @@ export default class BusinessCard extends PureComponent {
   async changeTo(number) {
     //번호 미입력시 보정
     if (typeof number === 'undefined') {
-      const lastNumber = this.props.children(this.changeTo).props.children
-        .length;
+      const lastNumber = this.props.children.length;
       const currentIdx = this.state.currentCardIdx;
       number = (currentIdx + 1) % lastNumber;
     }
@@ -64,14 +63,15 @@ export default class BusinessCard extends PureComponent {
   }
 
   render() {
-    const { children: getChildrenNode } = this.props;
+    const { children } = this.props;
     const { currentCardIdx } = this.state;
-    const children = getChildrenNode(this.changeTo).props.children;
 
     return (
-      <div ref={this.businessCardRef} className={css(styles.card)}>
-        {children[currentCardIdx] || children[0] || children}
-      </div>
+      <Provider value={{ ...this.state, setCard: this.changeTo }}>
+        <div ref={this.businessCardRef} className={css(styles.card)}>
+          {children[currentCardIdx]}
+        </div>
+      </Provider>
     );
   }
 }
