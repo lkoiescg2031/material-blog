@@ -29,7 +29,7 @@ const CardTemplate2 = ({
   return (
     <div className={css(globalStyles.card, styles.card)}>
       <div className={css(styles.inner)}>
-        <img className={css(styles.figure)} src={figure}></img>
+        <img className={css(styles.figure)} src={figure} alt="figure" />
         <div>
           <h3 className={css(styles.name)}>{name}</h3>
           <h5 className={css(styles.position)}>{position}</h5>

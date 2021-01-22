@@ -39,6 +39,7 @@ export default class MouseEffectLayout extends PureComponent {
     return (
       <div
         ref={this.layoutRef}
+        role="presentation"
         className={css(mouseLayoutStyles.layout)}
         onMouseMove={this.movingEffect(0.1)}
       >
