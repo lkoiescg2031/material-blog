@@ -1,13 +1,8 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import { StyleSheet, css } from 'aphrodite';
 import theme from '../../styles/theme';
-
-// TODO wave animation 추가
-// TODO wave animation reset 추가
-// TODO wave animation pause 추가
-// TODO wave animation start 추가
-// TODO wave animation stop 추가
 
 const styles = StyleSheet.create({
   canvas: {
@@ -19,41 +14,70 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    zIndex: -999,
   },
 });
 
 export default class Background extends PureComponent {
-  static propTypes = {};
+  static propTypes = {
+    aniState: PropTypes.oneOf(['start', 'pause', 'reset', 'stop']),
+  };
 
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
-    this.draw = this.draw.bind(this);
+    this.run = this.run.bind(this);
+    this.waveStart = this.waveStart.bind(this);
+    this.waveStop = this.waveStop.bind(this);
+    this.wavePause = this.wavePause.bind(this);
+    this.waveReset = this.waveReset.bind(this);
   }
 
-  draw(ctx, width, height) {
-    ctx.fillStyle = theme.palette.primary.main;
-
-    ctx.beginPath();
-    ctx.moveTo(750, 400);
-    ctx.bezierCurveTo(750, 370, 700, 250, 500, 250);
-    ctx.bezierCurveTo(200, 250, 200, 620.5, 200, 620.5);
-    ctx.bezierCurveTo(200, 800, 400, 102, 75, 120);
-    ctx.bezierCurveTo(1100, 1020, 1300, 800, 1300, 620.5);
-    ctx.bezierCurveTo(1300, 620.5, 1300, 250, 1000, 250);
-    ctx.bezierCurveTo(850, 250, 75, 370, 750, 400);
-    ctx.fill();
+  waveStart() {
+    // TODO wave animation start 추가
+  }
+  wavePause() {
+    // TODO wave animation pause 추가
+  }
+  waveReset() {
+    // TODO wave animation reset 추가
+  }
+  waveStop() {
+    // TODO wave animation stop 추가
   }
 
-  componentDidMount() {
+  // ani props 에 따라 에니메이션 실행
+  run() {
     const canvas = this.canvasRef.current;
 
-    if (canvas && canvas.getContext) {
+    if (canvas === undefined) {
+      console.error('cannot find canvas');
+    }
+
+    if (canvas.getContext) {
+      const { aniState } = this.props;
       const ctx = canvas.getContext('2d');
-      const { width, height } = canvas;
-      console.log(width, height);
-      this.draw(ctx, width, height);
+      switch (aniState) {
+        case 'start':
+          break;
+        case 'pause':
+          break;
+        case 'reset':
+          break;
+        case 'stop':
+          break;
+        default:
+          console.log('cannot match animation state');
+      }
+    }
+  }
+  // animation 실행
+  componentDidMount() {
+    this.run();
+  }
+  // animation 업데이트 반영
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.aniState !== this.props.aniState) {
+      this.run();
     }
   }
 
