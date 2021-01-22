@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -12,7 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-import { Consumer } from './context';
+import { Consumer } from './Context';
 
 export const drawerWidth = 240;
 
@@ -32,8 +31,6 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     right: '3px',
   },
-  toolbar: {},
-  closeButton: {},
 }));
 
 function BlogLayoutDrawer(props) {
@@ -50,7 +47,6 @@ function BlogLayoutDrawer(props) {
       {drawerMenu}
     </>
   );
-
   return (
     <Consumer>
       {({ isOpenDrawer, toggleDrawer, drawerElements }) => (

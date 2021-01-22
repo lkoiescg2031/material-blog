@@ -6,9 +6,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import globalTheme from '../../styles/theme';
 
-import { Provider } from './context';
-import AppBar from './BlogLayoutAppBar';
-import Drawer, { drawerWidth } from './BlogLayoutDrawer';
+import { Provider } from './Context';
+import AppBar from './AppBar';
+import Drawer, { drawerWidth } from './Drawer';
 import Background from './Background';
 
 const useStyles = makeStyles(theme => ({

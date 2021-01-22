@@ -1,2 +1,2 @@
-import Container from './BlogLayout';
+import Container from './Layout';
 export default Container;

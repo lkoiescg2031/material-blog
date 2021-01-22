@@ -1,8 +1,13 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 import { StyleSheet, css } from 'aphrodite';
 import theme from '../../styles/theme';
+
+// TODO wave animation 추가
+// TODO wave animation reset 추가
+// TODO wave animation pause 추가
+// TODO wave animation start 추가
+// TODO wave animation stop 추가
 
 const styles = StyleSheet.create({
   canvas: {

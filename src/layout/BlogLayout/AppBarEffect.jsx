@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
+// 스크롤 이벤트 핸들용
 function ElevationScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
