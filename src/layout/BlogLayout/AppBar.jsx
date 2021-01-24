@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ElevationScroll from './AppBarEffect';
+import ScrollEffect from './ScrollEffect';
 import { Consumer } from './Context';
 
 const useStyles = makeStyles(theme => ({
@@ -30,7 +30,7 @@ function BlogLayoutAppBar(props) {
   const classes = useStyles();
 
   return (
-    <ElevationScroll {...props}>
+    <ScrollEffect {...props}>
       <AppBar position="fixed" className={classes.appbar}>
         <Consumer>
           {({ title, appbarElements, toggleDrawer }) => (
@@ -52,7 +52,7 @@ function BlogLayoutAppBar(props) {
           )}
         </Consumer>
       </AppBar>
-    </ElevationScroll>
+    </ScrollEffect>
   );
 }
 
