@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexFlow: 'row wrap',
     justifyContent: 'center',
+    alignItems: 'center',
     '@media screen and (max-width:  500px)': {
       flexFlow: 'column wrap',
     },
@@ -83,8 +84,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     '@media screen and (max-width: 500px)': {
       width: '100%',
-      padding: 0,
-      border: 0,
       textAlign: 'center',
     },
     ':first-child': {
@@ -92,6 +91,8 @@ const styles = StyleSheet.create({
       paddingRight: '15px',
       borderRight: `1px solid ${color.secondaryColor}`,
       '@media screen and (max-width : 500px)': {
+        padding: 0,
+        border: 0,
         paddingBottom: '15px',
         borderBottom: `1px solid ${color.secondaryColor}`,
       },
@@ -100,6 +101,8 @@ const styles = StyleSheet.create({
       width: '285px',
       paddingLeft: '15px',
       '@media screen and (max-width: 500px)': {
+        padding: 0,
+        border: 0,
         paddingTop: '15px',
       },
     },
