@@ -1,12 +1,12 @@
 import React from 'react';
 
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Drawer from '@material-ui/core/Drawer';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 import Hidden from '@material-ui/core/Hidden';
-import Divider from '@material-ui/core/Divider';
 
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -19,6 +19,9 @@ const useStyles = makeStyles(theme => ({
   drawer: {},
   drawerPaper: {
     width: drawerWidth,
+    border: 0,
+  },
+  transParentBackground: {
     backgroundColor: '#00000000',
   },
   toolbar: {
@@ -43,7 +46,6 @@ function BlogLayoutDrawer(props) {
           <ArrowBackIosIcon />
         </IconButton>
       </div>
-      <Divider />
       {drawerMenu}
     </>
   );
@@ -71,7 +73,7 @@ function BlogLayoutDrawer(props) {
               ancher="left"
               className={classes.drawer}
               classes={{
-                paper: classes.drawerPaper,
+                paper: clsx(classes.drawerPaper, classes.transParentBackground),
               }}
               open
             >
