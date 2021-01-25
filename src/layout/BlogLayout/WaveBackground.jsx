@@ -41,7 +41,7 @@ export default function WaveBackgroundAni(props) {
 
     //for ratina
     const canvas = canvasRef.current;
-    if (typeof canvas !== 'undefined') {
+    if (typeof canvas !== 'undefined' && canvas !== null) {
       const context = canvas.getContext('2d');
       const ratio = 1;
       // const { devicePixelRatio: ratio = 1 } = window;
