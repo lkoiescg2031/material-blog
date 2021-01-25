@@ -15,9 +15,9 @@
   
 ### Layout
 
-  1. Background 웨이브 애니메이션 추가
-     1. 최상단 위치 시 뒷편에서 웨이브 애니메이션 동작
-     2. 스크롤 시 웨이브 애니메이션 중지
+  1. Background 웨이브 애니메이션 추가 :heavy_check_mark:
+     1. 최상단 위치 시 뒷편에서 웨이브 애니메이션 동작 :heavy_check_mark:
+     2. 스크롤 시 웨이브 애니메이션 중지 :x:
   2. 상단에 material-ui를 이용한 Appbar 추가 :heavy_check_mark:
   3. Appbar에 카테고리 추가 추가 ( 항목 : challenges, projects, resume, posts)
   4. Drawer 추가
