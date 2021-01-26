@@ -35,10 +35,10 @@ export default class WaveAniBackground extends PureComponent {
   static propTypes = {
     waveCount: PropTypes.number,
     pointCount: PropTypes.number,
-    waveHeight: PropTypes.number,
-    waveMaxHeight: PropTypes.number,
+    waveHeight: PropTypes.func,
+    waveMaxHeight: PropTypes.func,
     speed: PropTypes.number,
-    colors: PropTypes.arrayOf(PropTypes.string),
+    colors: PropTypes.arrayOf(PropTypes.func),
   };
 
   static defaultProps = {
@@ -113,6 +113,10 @@ export default class WaveAniBackground extends PureComponent {
     this.___resize();
 
     this.toggleAnimation();
+  }
+
+  componentWillUnmount() {
+    window.cancelAnimationFrame(this.requestAnimationFrameId)
   }
 
   render() {
