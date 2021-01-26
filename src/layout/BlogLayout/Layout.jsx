@@ -42,10 +42,10 @@ function BlogLayout({ title, appBarMenu, drawerMenu, children }) {
     setDrawer(!isOpenDrawer);
   };
 
-  const waveMinHeight = globalTheme.mixins.toolbar.minHeight;
+  // const waveMinHeight = globalTheme.mixins.toolbar.minHeight;
   const backgroundOpacity = 0;
   const createGradient = gradientOptions => ctx => {
-    const { width, height } = ctx.canvas;
+    const { height } = ctx.canvas;
     const canvasGradient = ctx.createLinearGradient(0, 0, 0, height);
 
     Object.entries(gradientOptions).forEach(([offset, color]) => {

@@ -82,7 +82,13 @@ export default function WaveBackgroundAni(props) {
     };
   }, [___draw, ___resize]);
 
-  return <canvas ref={canvasRef} className={css(backgroundStyle.canvas)} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className={css(backgroundStyle.canvas)}
+      {...restProps}
+    />
+  );
 }
 
 WaveBackgroundAni.propTypes = {
