@@ -3,7 +3,24 @@ import PropTypes from 'prop-types';
 import WaveGroup from './WaveGroup';
 import { StyleSheet, css } from 'aphrodite';
 
-const styles = StyleSheet.create({
+import { createGradient } from '../../utils/canvas';
+
+const defaultWaveColors = [
+  createGradient({
+    0: '#ef9a9aff',
+    1: '#a76b6b00',
+  }),
+  createGradient({
+    0: '#ef9a9aff',
+    1: '#ef9a9a00',
+  }),
+  createGradient({
+    0: '#ef9a9aff',
+    1: '#f2aeae00',
+  }),
+];
+
+const WaveAniBackgroundStyle = StyleSheet.create({
   canvas: {
     position: 'absolute',
     top: 0,
@@ -14,7 +31,6 @@ const styles = StyleSheet.create({
 
 export default class WaveAniBackground extends PureComponent {
   static propTypes = {
-    props: PropTypes,
     waveCount: PropTypes.number,
     pointCount: PropTypes.number,
     waveHeight: PropTypes.number,
@@ -23,7 +39,14 @@ export default class WaveAniBackground extends PureComponent {
     colors: PropTypes.arrayOf(PropTypes.string),
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    waveCount: 3,
+    pointCount: 6,
+    waveHeight: stageHeight => (stageHeight / 12) * 11,
+    waveMaxHeight: () => Math.random() * 15 + 15,
+    speed: 0.05,
+    colors: defaultWaveColors,
+  };
 
   constructor(props) {
     super(props);
@@ -32,40 +55,14 @@ export default class WaveAniBackground extends PureComponent {
 
     this.canvasRef = React.createRef();
 
-    this.init = this.initializeCanvas.bind(this);
-    this.clear = this.clear.bind(this);
-    this.run = this.run.bind(this);
-    this.resize = this.resize.bind(this);
-    this.animate = this.animate.bind(this);
+    //handle Wave ani
+    this.___resize = this.___resize.bind(this);
+    this.update = this.update.bind(this);
+    this.___animate = this.___animate.bind(this);
+    this.toggleAnimation = this.toggleAnimation.bind(this);
   }
 
-  clear() {
-    const {
-      waveCount,
-      pointCount,
-      waveHeight,
-      waveMaxHeight,
-      speed,
-      colors,
-    } = this.props;
-
-    this.waveGroupAni = new WaveGroup(
-      waveCount,
-      pointCount,
-      waveHeight,
-      waveMaxHeight,
-      speed,
-      colors,
-    );
-  }
-  run() {
-    window.addEventListener('resize', this.resize, false);
-    this.resize();
-
-    this.requestAnimationFrameId = window.requestAnimationFrame(this.animate);
-  }
-
-  resize() {
+  ___resize() {
     this.stageWidth = document.body.clientWidth;
     this.stageHeight = document.body.clientHeight;
 
@@ -78,30 +75,50 @@ export default class WaveAniBackground extends PureComponent {
     this.waveGroupAni.resize(this.stageWidth, this.stageHeight);
   }
 
-  animate() {
-    //prevAnimation
+  ___animate(t) {
+    this.update();
+    this.requestAnimationFrameId = window.requestAnimationFrame(
+      this.___animate,
+    );
+  }
+
+  update() {
     this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-
     this.waveGroupAni.draw(this.ctx);
+  }
 
-    //afterAnimation
-    this.requestAnimationFrameId = window.requestAnimationFrame(this.animate);
+  toggleAnimation() {
+    if (this.requestAnimationFrameId === 0) {
+      this.requestAnimationFrameId = window.requestAnimationFrame(
+        this.___animate,
+      );
+    } else {
+      window.cancelAnimationFrame(this.requestAnimationFrameId);
+      this.requestAnimationFrameId = 0;
+    }
   }
 
   componentDidMount() {
-    this.initializeCanvas();
-    this.run();
-  }
-
-  initializeCanvas() {
+    //initialize
     this.canvas = this.canvasRef.current;
     this.ctx = this.canvas.getContext('2d');
 
     this.requestAnimationFrameId = 0;
-    this.clear();
+
+    this.waveGroupAni = new WaveGroup(this.props);
+
+    window.addEventListener('resize', this.___resize, false);
+    this.___resize();
+
+    this.toggleAnimation();
   }
 
   render() {
-    return <canvas ref={this.canvasRef} className={css(styles.canvas)} />;
+    return (
+      <canvas
+        ref={this.canvasRef}
+        className={css(WaveAniBackgroundStyle.canvas)}
+      />
+    );
   }
 }

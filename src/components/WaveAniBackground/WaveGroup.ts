@@ -1,5 +1,15 @@
 import Wave from './Wave';
 
+export interface WaveGroupOptions {
+  totalWaves?: number;
+  totalPoints?: number;
+  waveHeight?: (stageHeight: number) => number;
+  waveMaxHeight?: () => number;
+  speed?: number;
+  colors?: string[] | ((ctx: CanvasRenderingContext2D) => CanvasGradient)[];
+  waves?: Wave[];
+}
+
 export default class WaveGroup {
   //property
   totalWaves: number;
@@ -10,38 +20,30 @@ export default class WaveGroup {
   colors: string[] | ((ctx: CanvasRenderingContext2D) => CanvasGradient)[];
   waves: Wave[];
 
-  constructor(
-    totalWaves = 3,
-    totalPoints = 6,
-    waveHeight: (stageHeight: number) => number,
-    waveMaxHeight: () => number,
-    speed: number,
-    colors = [
+  constructor(options: WaveGroupOptions = {}) {
+    this.totalWaves = options.totalWaves || 3;
+    this.totalPoints = options.totalPoints || 6;
+    this.colors = options.colors || [
       'rgba(0,199,235,0.4)',
       'rgba(0,146,199,0.4)',
       'rgba(0,87,158,0.4)',
-    ],
-  ) {
-    this.totalWaves = totalWaves;
-    this.totalPoints = totalPoints;
-    this.colors = colors;
-    this.speed = speed;
-    this.waveHeight = waveHeight;
-    this.waveMaxHeight = waveMaxHeight;
+    ];
+    this.speed = options.speed || 0.1;
+    this.waveHeight = options.waveHeight || (stageHeight => stageHeight / 2);
+    this.waveMaxHeight =
+      options.waveMaxHeight || (() => Math.random() * 100 + 150);
 
-    this.waves = new Array(this.totalWaves)
-      .fill(0)
-      .map(
-        (value, index) =>
-          new Wave(
-            index,
-            this.totalPoints,
-            this.waveHeight,
-            this.waveMaxHeight,
-            this.speed,
-            this.colors[index],
-          ),
-      );
+    this.waves = new Array(this.totalWaves).fill(0).map(
+      (_, index) =>
+        new Wave({
+          index,
+          totalPoints: this.totalPoints,
+          waveHeight: this.waveHeight,
+          waveMaxHeight: this.waveMaxHeight,
+          speed: this.speed,
+          color: this.colors[index],
+        }),
+    );
 
     //for callbacks
     this.resize = this.resize.bind(this);

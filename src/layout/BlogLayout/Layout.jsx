@@ -7,11 +7,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import globalTheme from '../../styles/theme';
 
 import WaveBackgroundAni from '../../components/WaveAniBackground';
+
 import { Provider } from './Context';
 import AppBar from './AppBar';
 import Drawer, { drawerWidth } from './Drawer';
-
-import { addAlpha } from '../../utils/colors';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,19 +42,6 @@ function BlogLayout({ title, appBarMenu, drawerMenu, children }) {
     setDrawer(!isOpenDrawer);
   };
 
-  // const waveMinHeight = globalTheme.mixins.toolbar.minHeight;
-  const backgroundOpacity = 0;
-  const createGradient = gradientOptions => ctx => {
-    const { height } = ctx.canvas;
-    const canvasGradient = ctx.createLinearGradient(0, 0, 0, height);
-
-    Object.entries(gradientOptions).forEach(([offset, color]) => {
-      canvasGradient.addColorStop(offset, color);
-    });
-
-    return canvasGradient;
-  };
-
   return (
     <Provider
       value={{
@@ -76,27 +62,7 @@ function BlogLayout({ title, appBarMenu, drawerMenu, children }) {
             {children}
           </main>
         </div>
-        <WaveBackgroundAni
-          waveCount={3}
-          pointCount={6}
-          waveHeight={stageHeight => (stageHeight / 12) * 11}
-          waveMaxHeight={() => Math.random() * 15 + 15}
-          speed={0.05}
-          colors={[
-            createGradient({
-              0: globalTheme.palette.primary.main,
-              1: addAlpha(globalTheme.palette.primary.dark, backgroundOpacity),
-            }),
-            createGradient({
-              0: globalTheme.palette.primary.main,
-              1: addAlpha(globalTheme.palette.primary.main, backgroundOpacity),
-            }),
-            createGradient({
-              0: globalTheme.palette.primary.main,
-              1: addAlpha(globalTheme.palette.primary.light, backgroundOpacity),
-            }),
-          ]}
-        />
+        <WaveBackgroundAni />
       </ThemeProvider>
     </Provider>
   );

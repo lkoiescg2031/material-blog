@@ -1,5 +1,14 @@
 import Point from './Point';
 
+export interface WaveProps {
+  index?: number;
+  totalPoints?: number;
+  waveHeight?: (stageHeight: number) => number;
+  waveMaxHeight?: () => number;
+  speed?: number;
+  color?: string | ((ctx: CanvasRenderingContext2D) => CanvasGradient);
+}
+
 export default class Wave {
   //property
   index: number;
@@ -16,20 +25,13 @@ export default class Wave {
   centerY: number;
   pointGap: number;
 
-  constructor(
-    index: number,
-    totalPoints: number,
-    waveHeight: (stageHeight: number) => number,
-    waveMaxHeight: () => number,
-    speed: number,
-    color: string | ((ctx: CanvasRenderingContext2D) => CanvasGradient),
-  ) {
-    this.index = index;
-    this.totalPoints = totalPoints;
-    this.waveHeight = waveHeight;
-    this.waveMaxHeight = waveMaxHeight;
-    this.speed = speed;
-    this.color = color;
+  constructor(options: WaveProps = {}) {
+    this.index = options.index;
+    this.totalPoints = options.totalPoints;
+    this.waveHeight = options.waveHeight;
+    this.waveMaxHeight = options.waveMaxHeight;
+    this.speed = options.speed;
+    this.color = options.color;
     this.points = [];
 
     //for callbacks
@@ -59,7 +61,7 @@ export default class Wave {
     this.points = new Array(this.totalPoints)
       .fill(0)
       .map(
-        (value, index) =>
+        (_, index) =>
           new Point(
             this.index + index,
             this.pointGap * index,

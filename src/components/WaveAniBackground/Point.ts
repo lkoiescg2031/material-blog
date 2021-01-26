@@ -11,8 +11,8 @@ export default class Point {
     index: number,
     x: number,
     y: number,
-    maxMove = () => Math.random() * 100 + 150,
-    speed = 0.1,
+    maxMove: () => number,
+    speed: number,
   ) {
     this.x = x;
     this.y = y;
