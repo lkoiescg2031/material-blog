@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { StyleSheet, css } from 'aphrodite';
-import { WaveGroup } from './WaveAni';
+import { WaveGroup } from '.';
 
 const backgroundStyle = StyleSheet.create({
   canvas: {

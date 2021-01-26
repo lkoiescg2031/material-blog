@@ -9,7 +9,7 @@ import globalTheme from '../../styles/theme';
 import { Provider } from './Context';
 import AppBar from './AppBar';
 import Drawer, { drawerWidth } from './Drawer';
-import WaveBackgroundAni from './WaveBackground';
+import WaveBackgroundAni from './WaveAniBackground';
 import { addAlpha } from '../../utils/colors';
 
 const useStyles = makeStyles(theme => ({
