@@ -20,7 +20,7 @@
      2. 스크롤 시 웨이브 애니메이션 중지 :x:
   2. 상단에 material-ui를 이용한 Appbar 추가 :heavy_check_mark:
   3. Appbar에 카테고리 추가 추가 ( 항목 : challenges, projects, resume, posts)
-  4. Drawer 추가
+  4. Drawer 추가 :heavy_check_mark:
   5. Drawer 상단 간략한 프로필 추가
   6. Drawer Post 위주의 계층 뷰 추가
 
