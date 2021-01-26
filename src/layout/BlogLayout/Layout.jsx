@@ -6,10 +6,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import globalTheme from '../../styles/theme';
 
+import WaveBackgroundAni from '../../components/WaveAniBackground';
 import { Provider } from './Context';
 import AppBar from './AppBar';
 import Drawer, { drawerWidth } from './Drawer';
-import WaveBackgroundAni from './WaveAniBackground';
+
 import { addAlpha } from '../../utils/colors';
 
 const useStyles = makeStyles(theme => ({
