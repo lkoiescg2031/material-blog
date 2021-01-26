@@ -22,6 +22,8 @@ const defaultWaveColors = [
 
 const WaveAniBackgroundStyle = StyleSheet.create({
   canvas: {
+    width: '100%',
+    height: '100%',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -67,7 +69,7 @@ export default class WaveAniBackground extends PureComponent {
     this.stageHeight = document.body.clientHeight;
 
     //for retina
-    const ratio = 1; //window.devicePixelRatio || 1;
+    const ratio = window.devicePixelRatio || 1;
     this.canvas.width = this.stageWidth * ratio;
     this.canvas.height = this.stageHeight * ratio;
     this.ctx.scale(ratio, ratio);
