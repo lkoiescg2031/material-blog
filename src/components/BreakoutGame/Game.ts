@@ -61,13 +61,14 @@ export default class Game {
     this.requestAnimationFrameId = 0;
 
     this.bullets = new BulletGroup(
-      20, // total bullet counts
+      100, // total bullet counts
       10, //x
       500, //y
       4, //r
       '#6E6E6D', //color
       290, //dir; deg
       1, //speed
+      10, //durability
     );
     this.bricks = new BrickGroup2D(
       this.stageWidth, // stage width
@@ -75,7 +76,7 @@ export default class Game {
       5, //col count
       18, // brick height
       18, // brick space
-      10, //brick durability
+      1000, //brick durability
       ['#6E6E6D', '#FAD0C9'], //brick color
       '14px pixel-retro', // brick font
     );

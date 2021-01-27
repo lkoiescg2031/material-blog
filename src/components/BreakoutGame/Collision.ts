@@ -6,9 +6,13 @@ import { isIntersection, substractDeg } from '../../utils/math';
 
 function Bullet2Wall(bullet: Bullet, stage: Stage): boolean {
   //if bullet enter stage
-  if(bullet.prevX <= 0 || bullet.prevX >= stage.stageWidth ||
-    bullet.prevY <= 0 || bullet.prevY >= stage.stageHeight) {
-      return false;
+  if (
+    bullet.prevX <= 0 ||
+    bullet.prevX >= stage.stageWidth ||
+    bullet.prevY <= 0 ||
+    bullet.prevY >= stage.stageHeight
+  ) {
+    return false;
   }
   //left
   else if (bullet.x - bullet.r <= 0) {
@@ -32,6 +36,7 @@ function Bullet2Wall(bullet: Bullet, stage: Stage): boolean {
   else if (bullet.y + bullet.r >= stage.stageHeight) {
     bullet.y = stage.stageHeight - bullet.r;
     bullet.dir = substractDeg(360, bullet.dir);
+    bullet.attacked(1);
     return true;
   } else {
     return false;

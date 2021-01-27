@@ -10,6 +10,7 @@ export default class BulletGroup {
   color: string;
   dir: number;
   speed: number;
+  durability: number;
 
   bullets: Bullet[];
 
@@ -21,6 +22,7 @@ export default class BulletGroup {
     color: string,
     dir: number,
     speed: number,
+    durability: number,
   ) {
     this.totalCouts = totalCouts;
 
@@ -31,6 +33,7 @@ export default class BulletGroup {
 
     this.color = color;
     this.speed = speed;
+    this.durability = durability;
 
     this.bullets = [];
   }
@@ -48,6 +51,7 @@ export default class BulletGroup {
           this.color, // color
           this.dir, // dir
           this.speed, // speed
+          this.durability, //durability
         ),
     );
   }
@@ -55,9 +59,6 @@ export default class BulletGroup {
   update(): void {
     this.bullets.forEach(element => element.update());
   }
-
-  // TODO bullet Collision
-  updateCollision(bullet: Bullet): void {}
 
   forEach(
     callback: (element: Bullet, index: number, array: Bullet[]) => void,

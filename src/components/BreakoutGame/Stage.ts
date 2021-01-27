@@ -39,11 +39,14 @@ export default class Stage implements Drawable {
       bullet.update();
 
       //check collision
-      let isCollided: boolean = false;
+      let isCollided: boolean = bullet.isAlive === false; //bullet 이 죽어있으면 충돌
 
-      isCollided = Collision.Bullet2Wall(bullet, this);
-
-      this.bricks.collisionUpdate(bullet);
+      if (isCollided === false) {
+        isCollided = Collision.Bullet2Wall(bullet, this);
+      }
+      if (isCollided === false) {
+        this.bricks.collisionUpdate(bullet);
+      }
     });
   }
 
