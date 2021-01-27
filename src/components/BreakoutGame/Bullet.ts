@@ -21,7 +21,14 @@ export default class Bullet implements Drawable {
   dir: number; // 움직이는 방향
   speed: number; // 속도 0 ~ 1
 
-  constructor(x = 10, y = 30, r = 3, color = '#000', dir = 45, speed = 1) {
+  constructor(
+    x: number,
+    y: number,
+    r: number,
+    color: string,
+    dir: number,
+    speed: number,
+  ) {
     //public
     this.setPos = this.setPos.bind(this);
     this.moveTo = this.moveTo.bind(this);

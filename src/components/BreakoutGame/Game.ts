@@ -1,6 +1,6 @@
 import Stage from './Stage';
 import Bullet from './Bullet';
-import Brick from './Brick';
+import BrickGroup2D from './BrickGroup2D';
 
 export default class Game {
   stageWidth: number;
@@ -15,7 +15,7 @@ export default class Game {
   bullets: Bullet[];
 
   //enemy elements
-  bricks: Brick[];
+  bricks: BrickGroup2D;
 
   constructor() {
     this.reset = this.reset.bind(this);
@@ -58,13 +58,32 @@ export default class Game {
     this.context = context;
 
     this.requestAnimationFrameId = 0;
+
     this.bullets = [];
-    this.bricks = [];
+    this.bricks = new BrickGroup2D(
+      this.stageWidth, // stage width
+      6, //row count
+      5, //col count
+      18, // brick height
+      18, // brick space
+      1000, //brick durability
+      ['#6E6E6D', '#FAD0C9'], //brick color
+      '14px pixel-retro', // brick font
+    );
   }
 
   ___createElements(): void {
-    this.bullets = [new Bullet()];
-    this.bricks = [new Brick()];
+    this.bullets = [
+      new Bullet(
+        10, //x
+        500, //y
+        3, //r
+        'yellow', //color
+        350, //dir; deg
+        2, //speed
+      ),
+    ];
+    this.bricks.reset();
   }
 
   ___createStage(): void {

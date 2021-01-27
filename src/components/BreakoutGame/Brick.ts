@@ -16,13 +16,13 @@ export default class Brick implements Drawable {
   isAlive: boolean;
 
   constructor(
-    x: number = 30,
-    y: number = 40,
-    width: number = 50,
-    height: number = 15,
-    color: [string, string] = ['#000', '#fff'],
-    font: string = '15px serif',
-    durability: number = 10,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    color: [string, string],
+    font: string,
+    durability: number,
   ) {
     this.attacked = this.attacked.bind(this);
     this.isIn = this.isIn.bind(this);
@@ -70,12 +70,12 @@ export default class Brick implements Drawable {
 
       ctx.font = this.font;
       ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+      ctx.textBaseline = 'top';
       ctx.fillStyle = this.color[1];
       ctx.fillText(
         this.durability.toString(),
         this.centerX,
-        this.centerY,
+        this.y,
         this.width,
       );
 
