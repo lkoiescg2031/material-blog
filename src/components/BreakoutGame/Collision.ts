@@ -5,8 +5,13 @@ import Brick from './Brick';
 import { isIntersection, substractDeg } from '../../utils/math';
 
 function Bullet2Wall(bullet: Bullet, stage: Stage): boolean {
+  //if bullet enter stage
+  if(bullet.prevX <= 0 || bullet.prevX >= stage.stageWidth ||
+    bullet.prevY <= 0 || bullet.prevY >= stage.stageHeight) {
+      return false;
+  }
   //left
-  if (bullet.x - bullet.r <= 0) {
+  else if (bullet.x - bullet.r <= 0) {
     bullet.x = bullet.r;
     bullet.dir = substractDeg(180, bullet.dir);
     return true;

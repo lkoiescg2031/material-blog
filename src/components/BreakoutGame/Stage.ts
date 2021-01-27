@@ -1,19 +1,19 @@
 import Drawable from './Drawable';
 
-import Bullet from './Bullet';
 import Collision from './Collision';
+import BulletGroup from './BulletGroup';
 import BrickGroup2D from './BrickGroup2D';
 
 export default class Stage implements Drawable {
   stageWidth: number;
   stageHeight: number;
-  bullets: Bullet[];
+  bullets: BulletGroup;
   bricks: BrickGroup2D;
 
   constructor(
     stageWidth,
     stageHeight,
-    bullets: Bullet[] = [],
+    bullets: BulletGroup,
     bricks: BrickGroup2D,
   ) {
     //public
@@ -27,11 +27,13 @@ export default class Stage implements Drawable {
     this.bricks = bricks;
   }
 
-  reset() {
-    this.bricks.reset();
-  }
+  // reset() {
+  //   this.bricks.reset();
+  //   this.bullets.reset();
+  // }
 
   update(): void {
+    // this.bullets.update();
     this.bullets.forEach(bullet => {
       //bullets update
       bullet.update();
@@ -47,6 +49,6 @@ export default class Stage implements Drawable {
 
   draw(ctx): void {
     this.bricks.draw(ctx);
-    this.bullets.forEach(element => element.draw(ctx));
+    this.bullets.draw(ctx);
   }
 }
