@@ -1,13 +1,19 @@
 import React from 'react';
 
+import WarningIcon from '@material-ui/icons/WarningRounded';
+
 import BlogLayout from '../layout/BlogLayout';
+import BreakOutGame from '../components/BreakoutGame/Canvas';
+
 import SEO from '../components/seo';
 
 const NotFoundPage = () => (
   <BlogLayout>
     <SEO title="404: Not found" />
-    <h1>404: Not Found</h1>
+    <WarningIcon style={{ fontSize: '75px' }} color="error" />
+    <h1>404: 페이지를 찾을 수 없음</h1>
     <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+    <BreakOutGame />
   </BlogLayout>
 );
 
