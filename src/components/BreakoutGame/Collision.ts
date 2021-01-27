@@ -1,42 +1,47 @@
 import Bullet from './Bullet';
-import Stage from './Stage';
 import Brick from './Brick';
+import options from './Options';
 
 import { isIntersection, substractDeg } from '../../utils/math';
 
-function Bullet2Wall(bullet: Bullet, stage: Stage): boolean {
+function Bullet2Wall(bullet: Bullet): boolean {
+  const { stageWidth, stageHeight } = options.game.stage;
+  const { radius } = options.game.bullets.bullet;
   //if bullet enter stage
   if (
     bullet.prevX <= 0 ||
-    bullet.prevX >= stage.stageWidth ||
+    bullet.prevX >= stageWidth ||
     bullet.prevY <= 0 ||
-    bullet.prevY >= stage.stageHeight
+    bullet.prevY >= stageHeight
   ) {
     return false;
   }
   //left
-  else if (bullet.x - bullet.r <= 0) {
-    bullet.x = bullet.r;
+  else if (bullet.x - radius <= 0) {
+    bullet.x = radius;
     bullet.dir = substractDeg(180, bullet.dir);
     return true;
   }
   //right
-  else if (bullet.x + bullet.r >= stage.stageWidth) {
-    bullet.x = stage.stageWidth - bullet.r;
+  else if (bullet.x + radius >= stageWidth) {
+    bullet.x = stageWidth - radius;
     bullet.dir = substractDeg(180, bullet.dir);
     return true;
   }
   //top
-  else if (bullet.y - bullet.r <= 0) {
-    bullet.y = bullet.r;
+  else if (bullet.y - radius <= 0) {
+    bullet.y = radius;
     bullet.dir = substractDeg(360, bullet.dir);
     return true;
   }
   //bottom
-  else if (bullet.y + bullet.r >= stage.stageHeight) {
-    bullet.y = stage.stageHeight - bullet.r;
+  else if (bullet.y + radius >= stageHeight) {
+    const { weakness } = options.game.bullets.bullet;
+
+    bullet.y = stageHeight - radius;
     bullet.dir = substractDeg(360, bullet.dir);
-    bullet.attacked(1);
+    bullet.attacked(weakness);
+
     return true;
   } else {
     return false;
@@ -45,16 +50,23 @@ function Bullet2Wall(bullet: Bullet, stage: Stage): boolean {
 
 //TODO Add corner collision
 function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
+  const { bricks, bullets } = options.game;
+  const { radius } = bullets.bullet;
+  const { height, weakness } = bricks.brick;
+
+  //out line
   const brickTopY = brick.y;
-  const brickBottomY = brick.y + brick.height;
+  const brickBottomY = brick.y + height;
   const brickLeftX = brick.x;
   const brickRightX = brick.x + brick.width;
 
-  const collisionOutLineTopY = brickTopY - bullet.r;
-  const collisionOutLineBottomY = brickBottomY + bullet.r;
-  const collisionOutLineLeftX = brickLeftX - bullet.r;
-  const collisionOutLineRightX = brickRightX + bullet.r;
+  //collision line
+  const collisionOutLineTopY = brickTopY - radius;
+  const collisionOutLineBottomY = brickBottomY + radius;
+  const collisionOutLineLeftX = brickLeftX - radius;
+  const collisionOutLineRightX = brickRightX + radius;
 
+  // bullet pos
   const bulletPrevPos = { x: bullet.prevX, y: bullet.prevY }; // 이동 전 총알 위치
   const bulletCurPos = { x: bullet.x, y: bullet.y }; // 이동 후 총알 위치
 
@@ -72,7 +84,7 @@ function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
     bullet.moveTo({ y: collisionOutLineTopY });
     bullet.setDir(substractDeg(360, bullet.dir));
     //brick collision
-    brick.attacked(1);
+    brick.attacked(weakness);
 
     return true;
   }
@@ -90,7 +102,7 @@ function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
     bullet.moveTo({ y: collisionOutLineBottomY });
     bullet.setDir(substractDeg(360, bullet.dir));
     //brick collision
-    brick.attacked(1);
+    brick.attacked(weakness);
 
     return true;
   }
@@ -108,7 +120,7 @@ function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
     bullet.moveTo({ x: collisionOutLineLeftX });
     bullet.setDir(substractDeg(180, bullet.dir));
     //brick's collision
-    brick.attacked(1);
+    brick.attacked(weakness);
 
     return true;
   }
@@ -126,7 +138,7 @@ function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
     bullet.moveTo({ x: collisionOutLineRightX });
     bullet.setDir(substractDeg(180, bullet.dir));
     //brick's collision
-    brick.attacked(1);
+    brick.attacked(weakness);
 
     return true;
   }

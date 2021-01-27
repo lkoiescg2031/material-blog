@@ -1,15 +1,13 @@
 import { degToRadians } from '../../utils/math';
 import Bullet from './Bullet';
+import options from './Options';
 
 export default class BulletGroup {
   totalCouts: number;
 
   x: number;
   y: number;
-  r: number;
-  color: string;
   dir: number;
-  speed: number;
   durability: number;
 
   bullets: Bullet[];
@@ -18,39 +16,34 @@ export default class BulletGroup {
     totalCouts: number,
     x: number,
     y: number,
-    r: number,
-    color: string,
     dir: number,
-    speed: number,
     durability: number,
   ) {
     this.totalCouts = totalCouts;
 
     this.x = x;
     this.y = y;
-    this.r = r;
     this.dir = dir;
 
-    this.color = color;
-    this.speed = speed;
     this.durability = durability;
 
     this.bullets = [];
   }
 
   reset(): void {
-    const dx = 3 * this.r * Math.cos(degToRadians(this.dir - 180));
-    const dy = 3 * this.r * Math.sin(degToRadians(this.dir - 180));
+    const { initialDistance, bullet } = options.game.bullets;
+    const { radius } = bullet;
+    const dx =
+      initialDistance * radius * Math.cos(degToRadians(this.dir - 180));
+    const dy =
+      initialDistance * radius * Math.sin(degToRadians(this.dir - 180));
 
     this.bullets = new Array(this.totalCouts).fill(0).map(
       (_, index) =>
         new Bullet(
           this.x + dx * index, // x
           this.y + dy * index, // y
-          this.r, // r
-          this.color, // color
           this.dir, // dir
-          this.speed, // speed
           this.durability, //durability
         ),
     );

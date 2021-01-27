@@ -2,10 +2,10 @@ import Stage from './Stage';
 
 import BrickGroup2D from './BrickGroup2D';
 import BulletGroup from './BulletGroup';
+import User from './User';
+import options from './Options';
 
 export default class Game {
-  stageWidth: number;
-  stageHeight: number;
   context: CanvasRenderingContext2D;
   requestAnimationFrameId: number;
 
@@ -13,6 +13,7 @@ export default class Game {
   stage: Stage;
 
   //user elements
+  user: User;
   bullets: BulletGroup;
 
   //enemy elements
@@ -29,12 +30,8 @@ export default class Game {
     this.___animate = this.___animate.bind(this);
   }
 
-  reset(
-    context: CanvasRenderingContext2D,
-    width: number,
-    height: number,
-  ): void {
-    this.___initProps(context, width, height);
+  reset(context: CanvasRenderingContext2D): void {
+    this.___initProps(context);
     this.___createElements();
     this.___createStage();
   }
@@ -49,59 +46,41 @@ export default class Game {
     window.cancelAnimationFrame(this.requestAnimationFrameId);
   }
 
-  ___initProps(
-    context: CanvasRenderingContext2D,
-    width: number,
-    height: number,
-  ): void {
-    this.stageWidth = width;
-    this.stageHeight = height;
+  ___initProps(context: CanvasRenderingContext2D): void {
     this.context = context;
 
     this.requestAnimationFrameId = 0;
 
+    this.user = new User();
     this.bullets = new BulletGroup(
-      100, // total bullet counts
+      1000, // total bullet counts
       10, //x
       500, //y
-      4, //r
-      '#6E6E6D', //color
       290, //dir; deg
-      1, //speed
       10, //durability
     );
     this.bricks = new BrickGroup2D(
-      this.stageWidth, // stage width
       6, //row count
       5, //col count
-      18, // brick height
-      18, // brick space
-      1000, //brick durability
-      ['#6E6E6D', '#FAD0C9'], //brick color
-      '14px pixel-retro', // brick font
+      1000, //durability
     );
   }
 
   ___createElements(): void {
+    this.user.reset();
     this.bullets.reset();
     this.bricks.reset();
   }
 
   ___createStage(): void {
-    this.stage = new Stage(
-      this.stageWidth,
-      this.stageHeight,
-      this.bullets,
-      this.bricks,
-    );
+    this.stage = new Stage(this.user, this.bullets, this.bricks);
   }
 
   ___animate(): void {
+    const { stageWidth, stageHeight } = options.game.stage;
     this.stage.update();
 
-    this.context.clearRect(0, 0, this.stageWidth, this.stageHeight);
-    this.context.strokeRect(0, 0, this.stageWidth, this.stageHeight);
-
+    this.context.clearRect(0, 0, stageWidth, stageHeight);
     this.stage.draw(this.context);
 
     this.requestAnimationFrameId = window.requestAnimationFrame(

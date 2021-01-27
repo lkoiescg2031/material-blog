@@ -1,13 +1,11 @@
 import Drawable from './Drawable';
+import options from './Options';
 
 export default class Brick implements Drawable {
   //shape
   x: number;
   y: number;
   width: number;
-  height: number;
-  color: [string, string];
-  font: string;
   centerX: number;
   centerY: number;
 
@@ -15,29 +13,20 @@ export default class Brick implements Drawable {
   durability: number;
   isAlive: boolean;
 
-  constructor(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    color: [string, string],
-    font: string,
-    durability: number,
-  ) {
+  constructor(x: number, y: number, width: number, durability: number) {
     this.attacked = this.attacked.bind(this);
     this.isIn = this.isIn.bind(this);
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
 
+    const { height } = options.game.bricks.brick;
+
     this.x = x;
     this.y = y;
     this.width = width;
-    this.height = height;
-    this.color = color;
-    this.font = font;
 
     this.centerX = this.x + this.width / 2;
-    this.centerY = this.y + this.height / 2;
+    this.centerY = this.y + height / 2;
     //state
     this.durability = durability;
     this.isAlive = this.durability !== 0;
@@ -47,12 +36,15 @@ export default class Brick implements Drawable {
     this.durability -= damage;
   }
 
+  //TODO 함수 위치 리팩토링 요청
   isIn(x: number, y: number): boolean {
+    const { height } = options.game.bricks.brick;
+
     return (
       x >= this.x &&
       x <= this.x + this.width &&
       y >= this.y &&
-      y <= this.y + this.height
+      y <= this.y + height
     );
   }
 
@@ -63,15 +55,24 @@ export default class Brick implements Drawable {
 
   draw(ctx: CanvasRenderingContext2D): void {
     if (this.isAlive) {
+      const {
+        height,
+        color,
+        fontColor,
+        font,
+        textAlign,
+        textBaseline,
+      } = options.game.bricks.brick;
+
       ctx.beginPath();
 
-      ctx.fillStyle = this.color[0];
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      ctx.fillStyle = color;
+      ctx.fillRect(this.x, this.y, this.width, height);
 
-      ctx.font = this.font;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillStyle = this.color[1];
+      ctx.font = font;
+      ctx.textAlign = textAlign;
+      ctx.textBaseline = textBaseline;
+      ctx.fillStyle = fontColor;
       ctx.fillText(
         this.durability.toString(),
         this.centerX,

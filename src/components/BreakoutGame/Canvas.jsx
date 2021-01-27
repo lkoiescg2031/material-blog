@@ -3,9 +3,11 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 import Game from './Game';
+import options from './Options';
 
-const stageWidth = 285;
-const stageHeight = 500;
+import './retroFont.css';
+
+const { stageWidth, stageHeight } = options.game.stage;
 
 const styles = StyleSheet.create({
   root: {
@@ -30,9 +32,11 @@ export default class Canvas extends PureComponent {
     super(props);
 
     this.canvasRef = React.createRef();
+
+    this.____initContext = this.____initContext.bind(this);
   }
 
-  componentDidMount() {
+  ____initContext() {
     this.canvas = this.canvasRef.current;
     this.ctx = this.canvas.getContext('2d');
 
@@ -42,9 +46,13 @@ export default class Canvas extends PureComponent {
     this.canvas.width = stageWidth * ratio;
     this.canvas.height = stageHeight * ratio;
     this.ctx.scale(ratio, ratio);
+  }
+
+  componentDidMount() {
+    this.____initContext();
 
     this.game = new Game();
-    this.game.reset(this.ctx, stageWidth, stageHeight);
+    this.game.reset(this.ctx);
     this.game.run();
   }
 

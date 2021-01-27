@@ -8,10 +8,6 @@ export interface Line {
   b: Point;
 }
 
-export function degToRadians(deg: number): number {
-  return (deg * Math.PI) / 180;
-}
-
 export function normalizeDeg(deg: number): number {
   const quotient = Math.floor(Math.abs(deg) / 360);
 
@@ -22,6 +18,10 @@ export function normalizeDeg(deg: number): number {
   } else {
     return deg;
   }
+}
+
+export function degToRadians(deg: number): number {
+  return (deg * Math.PI) / 180;
 }
 
 export function substractDeg(a: number, b: number): number {

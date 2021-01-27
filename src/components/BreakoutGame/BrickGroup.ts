@@ -1,63 +1,41 @@
 import Brick from './Brick';
 import Bullet from './Bullet';
 import Collision from './Collision';
+import options from './Options';
 
 export default class BrickGroup {
-  stageWidth: number;
-
   //brickOptions
   brickY: number;
-  brickHeight: number;
-  brickColor: [string, string];
-  brickfont: string;
+  totalColCount: number;
   brickDurability: number;
-  totalBricks: number;
-  betweenSpace: number;
 
-  brickWidth: number;
   bricks: Brick[];
 
-  constructor(
-    stageWidth: number,
-    brickY: number,
-    brickHeight: number,
-    brickColor: [string, string],
-    brickfont: string,
-    brickDurability: number,
-    totalBricks: number,
-    betweenSpace: number,
-  ) {
+  constructor(brickY: number, totalColCount: number, brickDurability: number) {
     this.collisionUpdate = this.collisionUpdate.bind(this);
     this.draw = this.draw.bind(this);
 
-    this.stageWidth = stageWidth;
+    const { stage, bricks } = options.game;
+    const { stageWidth } = stage;
+    const { betweenSpace } = bricks;
 
-    this.betweenSpace = betweenSpace;
-    this.totalBricks = totalBricks;
+    this.totalColCount = totalColCount;
     this.brickY = brickY;
-    this.brickHeight = brickHeight;
-    this.brickColor = brickColor;
-    this.brickfont = brickfont;
     this.brickDurability = brickDurability;
 
-    this.brickWidth =
-      (this.stageWidth - (this.totalBricks + 1) * this.betweenSpace) /
-      this.totalBricks;
+    const brickWidth =
+      (stageWidth - (this.totalColCount + 1) * betweenSpace) /
+      this.totalColCount;
 
-    this.bricks = new Array(this.totalBricks)
-      .fill(0)
-      .map(
-        (_, index) =>
-          new Brick(
-            this.betweenSpace * (index + 1) + this.brickWidth * index,
-            this.brickY,
-            this.brickWidth,
-            this.brickHeight,
-            this.brickColor,
-            this.brickfont,
-            this.brickDurability,
-          ),
-      );
+    this.bricks = new Array(this.totalColCount).fill(0).map(
+      (_, index) =>
+        new Brick(
+          betweenSpace * (index + 1) + brickWidth * index, // x
+          this.brickY, // y
+          brickWidth, // width
+          this.brickDurability, // durability
+        ),
+    );
   }
 
   collisionUpdate(bullet: Bullet): boolean {
