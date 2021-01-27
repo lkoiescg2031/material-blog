@@ -62,7 +62,7 @@ export default class Brick implements Drawable {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    if (true) {
+    if (this.isAlive) {
       ctx.beginPath();
 
       ctx.fillStyle = this.color[0];
