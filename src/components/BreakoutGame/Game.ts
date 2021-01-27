@@ -66,7 +66,7 @@ export default class Game {
       5, //col count
       18, // brick height
       18, // brick space
-      1000, //brick durability
+      10, //brick durability
       ['#6E6E6D', '#FAD0C9'], //brick color
       '14px pixel-retro', // brick font
     );
@@ -77,10 +77,10 @@ export default class Game {
       new Bullet(
         10, //x
         500, //y
-        3, //r
-        'yellow', //color
+        4, //r
+        '#6E6E6D', //color
         350, //dir; deg
-        2, //speed
+        2.5, //speed
       ),
     ];
     this.bricks.reset();
