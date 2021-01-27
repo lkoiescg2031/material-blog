@@ -37,7 +37,11 @@ export default class Stage implements Drawable {
 
       isCollided = Collision.Bullet2Wall(bullet, this);
 
-      // this.bricks.forEach(bricks => Collision.Bullet2Brick(element, bricks));
+      for (let i = 0; isCollided === false && i < this.bricks.length; i++) {
+        const brick = this.bricks[i];
+
+        isCollided = Collision.Bullet2Brick(bullet, brick);
+      }
     });
   }
 
