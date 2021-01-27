@@ -43,7 +43,9 @@ export default class Brick implements Drawable {
     this.isAlive = this.durability !== 0;
   }
 
-  attacked(damage: number): void {}
+  attacked(damage: number): void {
+    this.durability -= damage;
+  }
 
   isIn(x: number, y: number): boolean {
     return (
