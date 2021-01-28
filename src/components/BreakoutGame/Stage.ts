@@ -2,24 +2,27 @@ import options from './Options';
 
 import BrickGroup2D from './BrickGroup2D';
 import User from './User';
+import BulletGroup from './BulletGroup';
 
 export default class Stage {
   // elements
-  bricks: BrickGroup2D;
   user: User;
+  bricks: BrickGroup2D;
+  bullets: BulletGroup;
 
   // ability
   level: number;
   tryCount: number;
 
-  constructor(user: User, bricks: BrickGroup2D) {
+  constructor(user: User, bullets: BulletGroup, bricks: BrickGroup2D) {
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
     this.reset = this.reset.bind(this);
 
     this.___drawStage = this.___drawStage.bind(this);
-    this.___drawInterface = this.___drawInterface.bind(this);
+
     this.user = user;
+    this.bullets = bullets;
     this.bricks = bricks;
   }
 
@@ -32,7 +35,7 @@ export default class Stage {
 
   //TODO 스테이지 레벨 업데이트
   update(): void {
-    this.user.bullets.forEach(bullet => {
+    this.bullets.forEach(bullet => {
       //move update
       bullet.update();
       //check collision
@@ -45,15 +48,24 @@ export default class Stage {
       }
     });
   }
-
+  //View 
   draw(ctx: CanvasRenderingContext2D): void {
     this.___drawStage(ctx);
-    this.___drawInterface(ctx);
+    //draw elements
     this.bricks.draw(ctx);
+    this.bullets.draw(ctx);
+    this.user.draw(ctx);
   }
 
   private ___drawStage(ctx: CanvasRenderingContext2D): void {
+    //options
     const { y, stageWidth, stageHeight } = options.game.stage;
+    const { fontBig, fontSmall, fontColor } = options.game.stage;
+
+    const pad = 2;
+    const centerX = stageWidth / 2;
+    const tryCountStr = this.tryCount.toString().padStart(pad, '0');
+
     // outter line
     ctx.beginPath();
     ctx.strokeStyle = options.game.stage.stageColor;
@@ -75,12 +87,6 @@ export default class Stage {
     ctx.lineTo(stageWidth, 0);
     ctx.fill();
     ctx.closePath();
-  }
-
-  private ___drawInterface(ctx: CanvasRenderingContext2D): void {
-    const { y, stageWidth, fontBig, fontSmall, fontColor } = options.game.stage;
-    const centerX = stageWidth / 2;
-    const tryCountStr = this.tryCount.toString().padStart(2, '0');
 
     //draw level
     ctx.beginPath();

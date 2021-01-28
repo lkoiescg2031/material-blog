@@ -5,77 +5,60 @@ import BulletGroup from './BulletGroup';
 import User from './User';
 import options from './Options';
 
-/**
- * Game 생성 초기화 실행 종료 Class
- */
 export default class Game {
+  //Game Basic props
   context: CanvasRenderingContext2D;
   requestAnimationFrameId: number;
 
   // game elements
   stage: Stage;
-  user: User;
 
   constructor() {
-    this.reset = this.reset.bind(this); // 초기화
-    this.run = this.run.bind(this); // 실행
-    this.exit = this.exit.bind(this); // 종료
+    this.init = this.init.bind(this);
+    this.resetGame = this.resetGame.bind(this);
+    this.runGame = this.runGame.bind(this);
+    this.exit = this.exit.bind(this);
 
-    this.___initProps = this.___initProps.bind(this);
-    this.___resetElements = this.___resetElements.bind(this);
-    this.___animate = this.___animate.bind(this);
-    this.___update = this.___update.bind(this);
-    this.___draw = this.___draw.bind(this);
+    this.___runner = this.___runner.bind(this);
+    this.___updateData = this.___updateData.bind(this);
+    this.___updateView = this.___updateView.bind(this);
   }
 
-  reset(context: CanvasRenderingContext2D): void {
-    this.___initProps(context); // 진행 기초 요소 초기화 FrameID, context 등
-    this.___resetElements(); // 게임 내 객체 초기화
+  init(context: CanvasRenderingContext2D): void {
+    this.context = context;
+
+    this.requestAnimationFrameId = 0;
+
+    this.stage = new Stage(new User(), new BulletGroup(), new BrickGroup2D());
   }
 
-  run(): void {
-    this.requestAnimationFrameId = window.requestAnimationFrame(
-      this.___animate,
-    );
+  resetGame(): void {
+    this.stage.reset();
+  }
+
+  runGame(): void {
+    this.requestAnimationFrameId = window.requestAnimationFrame(this.___runner);
   }
 
   exit(): void {
     window.cancelAnimationFrame(this.requestAnimationFrameId);
   }
 
-  ___initProps(context: CanvasRenderingContext2D): void {
-    this.context = context;
+  ___runner(): void {
+    this.___updateData();
+    this.___updateView();
 
-    this.requestAnimationFrameId = 0;
-
-    this.user = new User(new BulletGroup());
-    this.stage = new Stage(this.user, new BrickGroup2D());
+    this.requestAnimationFrameId = window.requestAnimationFrame(this.___runner);
   }
 
-  ___resetElements(): void {
-    this.user.reset();
-    this.stage.reset();
-  }
-
-  ___animate(): void {
-    this.___update();
-    this.___draw();
-
-    this.requestAnimationFrameId = window.requestAnimationFrame(
-      this.___animate,
-    );
-  }
-
-  ___update() {
+  ___updateData() {
     this.stage.update();
-    this.user.update();
   }
 
-  ___draw() {
+  ___updateView() {
     const { stageWidth, stageHeight } = options.game.stage;
 
     this.context.clearRect(0, 0, stageWidth, stageHeight);
     this.stage.draw(this.context);
-    this.user.draw(this.context);
   }
 }

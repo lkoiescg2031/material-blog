@@ -2,9 +2,6 @@ import BulletGroup from './BulletGroup';
 import options from './Options';
 
 export default class User {
-  // element
-  bullets: BulletGroup;
-
   // about game
   score: number;
   maxScore: number;
@@ -13,13 +10,10 @@ export default class User {
   totalBall: number;
   durability: number;
 
-  constructor(bullets: BulletGroup) {
+  constructor() {
     this.reset = this.reset.bind(this);
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
-    this.___drawInterface = this.___drawInterface.bind(this);
-
-    this.bullets = bullets;
 
     this.reset();
   }
@@ -29,8 +23,6 @@ export default class User {
     this.maxScore = 0;
     this.totalBall = 1000;
     this.durability = 10;
-
-    this.bullets.reset();
   }
 
   update() {
@@ -38,11 +30,6 @@ export default class User {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    this.___drawInterface(ctx);
-    //draw bullets
-    this.bullets.draw(ctx);
-  }
-  ___drawInterface(ctx: CanvasRenderingContext2D) {
     const { y, stageWidth } = options.game.stage;
     const { fontSmall, fontBig, fontColor } = options.game.user;
     const maxTextWidth = stageWidth / 3 - 10;

@@ -46,14 +46,16 @@ export default class Canvas extends PureComponent {
     this.canvas.width = stageWidth * ratio;
     this.canvas.height = stageHeight * ratio;
     this.ctx.scale(ratio, ratio);
+
+    this.game = new Game();
+    this.game.init(this.ctx);
   }
 
   componentDidMount() {
     this.____initContext();
 
-    this.game = new Game();
-    this.game.reset(this.ctx);
-    this.game.run();
+    this.game.resetGame();
+    this.game.runGame();
   }
 
   componentWillUnmount() {
