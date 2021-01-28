@@ -2,44 +2,58 @@ import BrickGroup from './BrickGroup';
 import Bullet from './Bullet';
 import options from './Options';
 
+interface BrickGroupResetOption {
+  rowSize?: number;
+  colSize?: number;
+  durability?: number;
+}
+
 export default class BrickGRoup2D {
-  totalRowBrick: number;
-  totalColBrick: number;
+  rowSize: number;
+  colSize: number;
 
-  brickDurability: number;
+  durability: number;
 
-  brickGroups: BrickGroup[];
+  bricks2D: BrickGroup[];
 
-  constructor(rowCount: number, colCount: number, brickDurability: number) {
+  constructor(options: BrickGroupResetOption = {}) {
     this.reset = this.reset.bind(this);
     this.collisionUpdate = this.collisionUpdate.bind(this);
     this.draw = this.draw.bind(this);
 
-    this.totalRowBrick = rowCount;
-    this.totalColBrick = colCount;
+    this.reset(options);
 
-    this.brickDurability = brickDurability;
-
-    this.brickGroups = [];
+    this.bricks2D = [];
   }
 
-  reset(): void {
-    const { betweenSpace, brick } = options.game.bricks;
+  reset(resetOptions: BrickGroupResetOption = {}): void {
+    const { bricks, stage } = options.game;
+
+    //stage
+    const { rowSize, colSize, durability } = stage;
+
+    //bricks
+    const { betweenSpace, brick } = bricks;
     const { height } = brick;
 
-    this.brickGroups = new Array(this.totalRowBrick).fill(0).map(
+    this.rowSize = resetOptions.rowSize || rowSize;
+    this.colSize = resetOptions.colSize || colSize;
+
+    this.durability = resetOptions.durability || durability;
+
+    this.bricks2D = new Array(this.rowSize).fill(0).map(
       (_, index) =>
         new BrickGroup(
           betweenSpace * (index + 1) + height * index, // y
-          this.totalColBrick, // col count
-          this.brickDurability, // durability
+          this.colSize, // col count
+          this.durability, // durability
         ),
     );
   }
 
   collisionUpdate(bullet: Bullet): boolean {
-    for (let i = 0; i < this.brickGroups.length; i++) {
-      const brickgroup = this.brickGroups[i];
+    for (let i = 0; i < this.bricks2D.length; i++) {
+      const brickgroup = this.bricks2D[i];
       const isCollided = brickgroup.collisionUpdate(bullet);
 
       if (isCollided) {
@@ -51,6 +65,6 @@ export default class BrickGRoup2D {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    this.brickGroups.forEach(element => element.draw(ctx));
+    this.bricks2D.forEach(element => element.draw(ctx));
   }
 }

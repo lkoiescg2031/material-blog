@@ -16,7 +16,7 @@ export default class BrickGroup {
     this.draw = this.draw.bind(this);
 
     const { stage, bricks } = options.game;
-    const { stageWidth } = stage;
+    const { y, stageWidth } = stage;
     const { betweenSpace } = bricks;
 
     this.totalColCount = totalColCount;
@@ -31,7 +31,7 @@ export default class BrickGroup {
       (_, index) =>
         new Brick(
           betweenSpace * (index + 1) + brickWidth * index, // x
-          this.brickY, // y
+          this.brickY + y, // y
           brickWidth, // width
           this.brickDurability, // durability
         ),

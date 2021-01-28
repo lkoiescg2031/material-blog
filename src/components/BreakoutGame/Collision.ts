@@ -5,9 +5,10 @@ import options from './Options';
 import { isIntersection, substractDeg } from '../../utils/math';
 
 function Bullet2Wall(bullet: Bullet): boolean {
-  const { stageWidth, stageHeight } = options.game.stage;
+  const { y, stageWidth, stageHeight } = options.game.stage;
   const { radius } = options.game.bullets.bullet;
   //if bullet enter stage
+  //FIXME 특정 방향에서 진입시 총알이 진입하지 않고 스테이지 밖으로 나가는 현상
   if (
     bullet.prevX <= 0 ||
     bullet.prevX >= stageWidth ||
@@ -20,18 +21,21 @@ function Bullet2Wall(bullet: Bullet): boolean {
   else if (bullet.x - radius <= 0) {
     bullet.x = radius;
     bullet.dir = substractDeg(180, bullet.dir);
+
     return true;
   }
   //right
   else if (bullet.x + radius >= stageWidth) {
     bullet.x = stageWidth - radius;
     bullet.dir = substractDeg(180, bullet.dir);
+
     return true;
   }
   //top
-  else if (bullet.y - radius <= 0) {
-    bullet.y = radius;
+  else if (bullet.y - radius <= y) {
+    bullet.y = y + radius;
     bullet.dir = substractDeg(360, bullet.dir);
+
     return true;
   }
   //bottom

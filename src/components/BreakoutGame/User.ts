@@ -1,16 +1,25 @@
+import BulletGroup from './BulletGroup';
+
 export default class User {
+  // element
+  bullets: BulletGroup;
+
+  // about game
   score: number;
   maxScore: number;
+  // ability
   totalBall: number;
   durability: number;
-  tryCount: number;
 
-  constructor() {
+  constructor(bullets: BulletGroup) {
+    this.update = this.update.bind(this);
+    this.draw = this.draw.bind(this);
+
     this.score = 0;
     this.maxScore = 0;
     this.totalBall = 1;
     this.durability = 10;
-    this.tryCount = 10;
+    this.bullets = bullets;
   }
 
   reset() {
@@ -18,9 +27,10 @@ export default class User {
     this.maxScore = 0;
     this.totalBall = 1;
     this.durability = 10;
-    this.tryCount = 10;
+
+    this.bullets.reset();
   }
-  
+
   update() {}
 
   draw(ctx: RenderingContext) {}

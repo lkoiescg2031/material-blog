@@ -7,22 +7,31 @@ import BulletGroup from './BulletGroup';
 import BrickGroup2D from './BrickGroup2D';
 
 export default class Stage implements Drawable {
+  // elements
   user: User;
-  bullets: BulletGroup;
   bricks: BrickGroup2D;
 
-  constructor(user: User, bullets: BulletGroup, bricks: BrickGroup2D) {
-    //public
+  // ability
+  level: number;
+  tryCount: number;
+
+  constructor(user: User, bricks: BrickGroup2D) {
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);
+    this.reset = this.reset.bind(this);
 
     this.user = user;
-    this.bullets = bullets;
     this.bricks = bricks;
   }
 
+  reset() {
+    //TODO 스테이지 초기설정
+    this.bricks.reset();
+  }
+
+  //TODO 스테이지 진행
   update(): void {
-    this.bullets.forEach(bullet => {
+    this.user.bullets.forEach(bullet => {
       //move update
       bullet.update();
 
@@ -38,17 +47,17 @@ export default class Stage implements Drawable {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    this.___drawOutLine(ctx);
+    this.___drawStage(ctx);
     this.user.draw(ctx);
     this.bricks.draw(ctx);
-    this.bullets.draw(ctx);
+    this.user.bullets.draw(ctx);
   }
 
-  private ___drawOutLine(ctx: CanvasRenderingContext2D): void {
-    const { stageWidth, stageHeight } = options.game.stage;
-
+  private ___drawStage(ctx: CanvasRenderingContext2D): void {
+    const { y, stageWidth, stageHeight } = options.game.stage;
+    // outter line
     ctx.beginPath();
-    ctx.fillStyle = options.game.stage.outLineColor;
+    ctx.strokeStyle = options.game.stage.stageColor;
     ctx.lineWidth = options.game.stage.outLineWidth;
     ctx.moveTo(0, 0);
     ctx.lineTo(0, stageHeight);
@@ -56,6 +65,16 @@ export default class Stage implements Drawable {
     ctx.lineTo(stageWidth, 0);
     ctx.lineTo(0, 0);
     ctx.stroke();
+    ctx.closePath();
+
+    // interface board
+    ctx.beginPath();
+    ctx.fillStyle = options.game.stage.stageColor;
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, y);
+    ctx.lineTo(stageWidth, y);
+    ctx.lineTo(stageWidth, 0);
+    ctx.fill();
     ctx.closePath();
   }
 }
