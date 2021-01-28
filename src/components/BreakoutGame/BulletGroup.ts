@@ -1,3 +1,4 @@
+import { element } from 'prop-types';
 import { degToRadians } from '../../utils/math';
 import Bullet from './Bullet';
 import options from './Options';
@@ -22,10 +23,10 @@ export default class BulletGroup {
 
   constructor(options: BulletGroupOptions = {}) {
     this.reset = this.reset.bind(this);
-    this.update = this.update.bind(this);
-    this.draw = this.draw.bind(this);
 
-    this.reset(options);
+    this.moveUpdate = this.moveUpdate.bind(this);
+    this.isAllDead = this.isAllDead.bind(this);
+    this.draw = this.draw.bind(this);
   }
 
   reset(resetOptions: BulletGroupOptions = {}): void {
@@ -57,8 +58,15 @@ export default class BulletGroup {
     );
   }
 
-  update(): void {
+  moveUpdate(): void {
     this.bullets.forEach(element => element.update());
+  }
+
+  isAllDead(): boolean {
+    return this.bullets.reduce(
+      (prevBool, element) => prevBool && !element.isAlive,
+      true as boolean,
+    );
   }
 
   draw(ctx: CanvasRenderingContext2D): void {

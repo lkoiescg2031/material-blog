@@ -1,5 +1,6 @@
 import Brick from './Brick';
 import Bullet from './Bullet';
+import User from './User';
 import Collision from './Collision';
 import options from './Options';
 
@@ -13,6 +14,7 @@ export default class BrickGroup {
 
   constructor(brickY: number, totalColCount: number, brickDurability: number) {
     this.collisionUpdate = this.collisionUpdate.bind(this);
+    this.isAllDead = this.isAllDead.bind(this);
     this.draw = this.draw.bind(this);
 
     const { stage, bricks } = options.game;
@@ -38,7 +40,7 @@ export default class BrickGroup {
     );
   }
 
-  collisionUpdate(bullet: Bullet): boolean {
+  collisionUpdate(bullet: Bullet, user: User): boolean {
     for (let i = 0; i < this.bricks.length; i++) {
       const brick = this.bricks[i];
 
@@ -48,7 +50,7 @@ export default class BrickGroup {
       }
 
       // 충돌 확인
-      const isCollided = Collision.Bullet2Brick(bullet, brick);
+      const isCollided = Collision.Bullet2Brick(bullet, brick, user);
       if (isCollided) {
         //충돌 업데이트
         brick.update();
@@ -57,6 +59,13 @@ export default class BrickGroup {
     }
 
     return false;
+  }
+
+  isAllDead(): boolean {
+    return this.bricks.reduce(
+      (prevBool, element) => prevBool && !element.isAlive,
+      true as boolean,
+    );
   }
 
   draw(ctx: CanvasRenderingContext2D): void {

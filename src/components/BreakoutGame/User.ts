@@ -1,4 +1,3 @@
-import BulletGroup from './BulletGroup';
 import options from './Options';
 
 export default class User {
@@ -9,24 +8,45 @@ export default class User {
   // ability
   totalBall: number;
   durability: number;
+  totalBallIncRate: number;
+  durablityIncRate: number;
+
+  //shootInfo
+  posX: number;
+  dir: number;
 
   constructor() {
     this.reset = this.reset.bind(this);
-    this.update = this.update.bind(this);
+    this.levelUpdate = this.levelUpdate.bind(this);
     this.draw = this.draw.bind(this);
 
-    this.reset();
+    this.maxScore = 0;
+    this.score = 0;
   }
 
   reset() {
+    const {
+      bulletCount,
+      bulletDurability,
+      bulletCountIncRate,
+      bulletDurabilityIncRate,
+    } = options.game.user;
+
+    this.maxScore = Math.max(this.maxScore, this.score);
     this.score = 0;
-    this.maxScore = 0;
-    this.totalBall = 1000;
-    this.durability = 10;
+
+    this.totalBall = bulletCount - bulletCountIncRate;
+    this.durability = bulletDurability - bulletDurabilityIncRate;
+    this.totalBallIncRate = bulletCountIncRate;
+    this.durablityIncRate = bulletDurabilityIncRate;
+
+    this.posX = 0;
+    this.dir = 180;
   }
 
-  update() {
-    //TODO bolls 와 bounce 증가
+  levelUpdate() {
+    this.totalBall += this.totalBallIncRate;
+    this.durability += this.durablityIncRate;
   }
 
   draw(ctx: CanvasRenderingContext2D) {

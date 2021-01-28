@@ -53,8 +53,6 @@ export default class Canvas extends PureComponent {
 
   componentDidMount() {
     this.____initContext();
-
-    this.game.resetGame();
     this.game.runGame();
   }
 

@@ -19,15 +19,19 @@ const game = {
     fontColor: theme.palette.inner,
     fontBig: retroFont(11),
     fontSmall: retroFont(8),
+
     //난이도 옵션
-    rowSize: 6, // 기본 row count
+    rowSize: 5, // 기본 row count
     colSize: 5, // 기본 col count
-    durability: 1000, // 기본 durability
+    durability: 0, // 기본 durability
+    durabilityIncRate: 10, // 블럭 내구도 증가량
   },
   user: {
     //난이도 옵션
-    bulletCount: 1000,
-    bulletDurability: 10,
+    bulletCount: 10,
+    bulletDurability: 3,
+    bulletCountIncRate: 3,
+    bulletDurabilityIncRate: 1,
     //초기 방향
     initialShootPosX: 0,
     initialShootPosY: 500,
@@ -39,11 +43,11 @@ const game = {
   },
   bullets: {
     //기본값
-    defaultTotal: 1000, //기본 총알 수
+    defaultTotal: 10, //기본 총알 수
     defaultX: 0,
     defaultY: 501,
     defaultDir: 342, //단위 degree
-    defaultDurability: 10, // 총알 기본 하단 바운스 횟수
+    defaultDurability: 3, // 총알 기본 하단 바운스 횟수
     //외형 옵션
     initialDistance: 2, // 초기 총알 중심 사이의 간격, 단위 radius
     bullet: {

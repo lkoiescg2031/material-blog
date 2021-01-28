@@ -3,6 +3,7 @@ import Drawable from './Drawable';
 import Collision from './Collision';
 import { degToRadians } from '../../utils/math';
 import options from './Options';
+import User from './User';
 
 interface Point {
   x?: number;
@@ -19,16 +20,11 @@ export default class Bullet implements Drawable {
 
   // state
   dir: number; // 움직이는 방향
-  
+
   durability: number;
   isAlive: boolean;
 
-  constructor(
-    x: number,
-    y: number,
-    dir: number,
-    durability: number,
-  ) {
+  constructor(x: number, y: number, dir: number, durability: number) {
     //public
     this.setPos = this.setPos.bind(this);
     this.moveTo = this.moveTo.bind(this);
@@ -67,6 +63,7 @@ export default class Bullet implements Drawable {
 
   attacked(damage: number): void {
     this.durability -= damage;
+    this.isAlive = this.durability !== 0;
   }
 
   update(): void {
@@ -75,11 +72,10 @@ export default class Bullet implements Drawable {
       x: this.x + speed * 2 * radius * Math.cos(degToRadians(this.dir)),
       y: this.y + speed * 2 * radius * Math.sin(degToRadians(this.dir)),
     });
-    this.isAlive = this.durability !== 0;
   }
 
-  updateWallCollision(): boolean {
-    return Collision.Bullet2Wall(this);
+  updateWallCollision(user: User): boolean {
+    return Collision.Bullet2Wall(this, user);
   }
 
   draw(ctx: CanvasRenderingContext2D): void {

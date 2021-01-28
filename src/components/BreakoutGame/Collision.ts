@@ -1,27 +1,20 @@
+import User from './User';
 import Bullet from './Bullet';
 import Brick from './Brick';
 import options from './Options';
 
 import { isIntersection, substractDeg } from '../../utils/math';
 
-function Bullet2Wall(bullet: Bullet): boolean {
+//FIXME bullet이 스테이지로 진입할 때 벽과 충돌하는 현상 발생
+function Bullet2Wall(bullet: Bullet, user: User): boolean {
   const { y, stageWidth, stageHeight } = options.game.stage;
   const { radius } = options.game.bullets.bullet;
-  //if bullet enter stage
-  //FIXME 특정 방향에서 진입시 총알이 진입하지 않고 스테이지 밖으로 나가는 현상
-  if (
-    bullet.prevX <= 0 ||
-    bullet.prevX >= stageWidth ||
-    bullet.prevY <= 0 ||
-    bullet.prevY >= stageHeight
-  ) {
-    return false;
-  }
   //left
-  else if (bullet.x - radius <= 0) {
+  if (bullet.x - radius <= 0) {
     bullet.x = radius;
     bullet.dir = substractDeg(180, bullet.dir);
 
+    user.score += 1;
     return true;
   }
   //right
@@ -29,6 +22,7 @@ function Bullet2Wall(bullet: Bullet): boolean {
     bullet.x = stageWidth - radius;
     bullet.dir = substractDeg(180, bullet.dir);
 
+    user.score += 1;
     return true;
   }
   //top
@@ -36,6 +30,7 @@ function Bullet2Wall(bullet: Bullet): boolean {
     bullet.y = y + radius;
     bullet.dir = substractDeg(360, bullet.dir);
 
+    user.score += 1;
     return true;
   }
   //bottom
@@ -46,14 +41,15 @@ function Bullet2Wall(bullet: Bullet): boolean {
     bullet.dir = substractDeg(360, bullet.dir);
     bullet.attacked(weakness);
 
+    user.score += 1;
     return true;
   } else {
     return false;
   }
 }
 
-//TODO Add corner collision
-function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
+//FIXME Add corner collision
+function Bullet2Brick(bullet: Bullet, brick: Brick, user: User): boolean {
   const { bricks, bullets } = options.game;
   const { radius } = bullets.bullet;
   const { height, weakness } = bricks.brick;
@@ -89,6 +85,8 @@ function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
     bullet.setDir(substractDeg(360, bullet.dir));
     //brick collision
     brick.attacked(weakness);
+    //user
+    user.score += 10;
 
     return true;
   }
@@ -107,6 +105,8 @@ function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
     bullet.setDir(substractDeg(360, bullet.dir));
     //brick collision
     brick.attacked(weakness);
+    //user
+    user.score += 10;
 
     return true;
   }
@@ -125,6 +125,8 @@ function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
     bullet.setDir(substractDeg(180, bullet.dir));
     //brick's collision
     brick.attacked(weakness);
+    //user
+    user.score += 10;
 
     return true;
   }
@@ -143,6 +145,8 @@ function Bullet2Brick(bullet: Bullet, brick: Brick): boolean {
     bullet.setDir(substractDeg(180, bullet.dir));
     //brick's collision
     brick.attacked(weakness);
+    //user
+    user.score += 10;
 
     return true;
   }
