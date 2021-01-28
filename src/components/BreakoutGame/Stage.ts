@@ -1,15 +1,12 @@
-import Drawable from './Drawable';
-
 import options from './Options';
 
-import User from './User';
-import BulletGroup from './BulletGroup';
 import BrickGroup2D from './BrickGroup2D';
+import User from './User';
 
-export default class Stage implements Drawable {
+export default class Stage {
   // elements
-  user: User;
   bricks: BrickGroup2D;
+  user: User;
 
   // ability
   level: number;
@@ -20,21 +17,24 @@ export default class Stage implements Drawable {
     this.draw = this.draw.bind(this);
     this.reset = this.reset.bind(this);
 
+    this.___drawStage = this.___drawStage.bind(this);
+    this.___drawInterface = this.___drawInterface.bind(this);
     this.user = user;
     this.bricks = bricks;
   }
 
   reset() {
     //TODO 스테이지 초기설정
+    this.level = 1;
+    this.tryCount = 10;
     this.bricks.reset();
   }
 
-  //TODO 스테이지 진행
+  //TODO 스테이지 레벨 업데이트
   update(): void {
     this.user.bullets.forEach(bullet => {
       //move update
       bullet.update();
-
       //check collision
       let isCollided: boolean = bullet.isAlive === false; //bullet 이 죽어있으면 충돌
       if (isCollided === false) {
@@ -48,9 +48,8 @@ export default class Stage implements Drawable {
 
   draw(ctx: CanvasRenderingContext2D): void {
     this.___drawStage(ctx);
-    this.user.draw(ctx);
+    this.___drawInterface(ctx);
     this.bricks.draw(ctx);
-    this.user.bullets.draw(ctx);
   }
 
   private ___drawStage(ctx: CanvasRenderingContext2D): void {
@@ -75,6 +74,30 @@ export default class Stage implements Drawable {
     ctx.lineTo(stageWidth, y);
     ctx.lineTo(stageWidth, 0);
     ctx.fill();
+    ctx.closePath();
+  }
+
+  private ___drawInterface(ctx: CanvasRenderingContext2D): void {
+    const { y, stageWidth, fontBig, fontSmall, fontColor } = options.game.stage;
+    const centerX = stageWidth / 2;
+    const tryCountStr = this.tryCount.toString().padStart(2, '0');
+
+    //draw level
+    ctx.beginPath();
+    ctx.font = fontBig;
+    ctx.fillStyle = fontColor;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(`level ${this.level}`, centerX, y / 2, stageWidth);
+    ctx.closePath();
+
+    //draw try
+    ctx.beginPath();
+    ctx.font = fontSmall;
+    ctx.fillStyle = fontColor;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(`try ${tryCountStr}`, centerX, y - 8, stageWidth);
     ctx.closePath();
   }
 }

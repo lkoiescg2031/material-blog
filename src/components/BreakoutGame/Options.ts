@@ -16,6 +16,9 @@ const game = {
     stageHeight: 500,
     stageColor: theme.palette.outter,
     outLineWidth: 2,
+    fontColor: theme.palette.inner,
+    fontBig: retroFont(11),
+    fontSmall: retroFont(8),
     //난이도 옵션
     rowSize: 6, // 기본 row count
     colSize: 5, // 기본 col count
@@ -29,6 +32,10 @@ const game = {
     initialShootPosX: 0,
     initialShootPosY: 500,
     initialShootDir: 180,
+    //외형 옵션
+    fontColor: theme.palette.inner,
+    fontBig: retroFont(8),
+    fontSmall: retroFont(7),
   },
   bullets: {
     //기본값
@@ -56,9 +63,7 @@ const game = {
       weakness: 1, // 한번에 받는 대미지 양
       // font shape
       fontColor: theme.palette.inner,
-      font: retroFont(14),
-      textAlign: 'center' as CanvasTextAlign,
-      textBaseline: 'top' as CanvasTextBaseline,
+      font: retroFont(7),
     },
   },
 };

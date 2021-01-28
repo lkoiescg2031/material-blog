@@ -55,14 +55,7 @@ export default class Brick implements Drawable {
 
   draw(ctx: CanvasRenderingContext2D): void {
     if (this.isAlive) {
-      const {
-        height,
-        color,
-        fontColor,
-        font,
-        textAlign,
-        textBaseline,
-      } = options.game.bricks.brick;
+      const { height, color, fontColor, font } = options.game.bricks.brick;
 
       ctx.beginPath();
 
@@ -70,13 +63,13 @@ export default class Brick implements Drawable {
       ctx.fillRect(this.x, this.y, this.width, height);
 
       ctx.font = font;
-      ctx.textAlign = textAlign;
-      ctx.textBaseline = textBaseline;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
       ctx.fillStyle = fontColor;
       ctx.fillText(
         this.durability.toString(),
         this.centerX,
-        this.y,
+        this.centerY,
         this.width,
       );
 

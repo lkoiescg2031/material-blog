@@ -23,7 +23,9 @@ export default class Game {
 
     this.___initProps = this.___initProps.bind(this);
     this.___resetElements = this.___resetElements.bind(this);
-    this.___runner = this.___runner.bind(this);
+    this.___animate = this.___animate.bind(this);
+    this.___update = this.___update.bind(this);
+    this.___draw = this.___draw.bind(this);
   }
 
   reset(context: CanvasRenderingContext2D): void {
@@ -32,7 +34,9 @@ export default class Game {
   }
 
   run(): void {
-    this.requestAnimationFrameId = window.requestAnimationFrame(this.___runner);
+    this.requestAnimationFrameId = window.requestAnimationFrame(
+      this.___animate,
+    );
   }
 
   exit(): void {
@@ -53,13 +57,25 @@ export default class Game {
     this.stage.reset();
   }
 
-  ___runner(): void {
-    const { stageWidth, stageHeight } = options.game.stage;
+  ___animate(): void {
+    this.___update();
+    this.___draw();
+
+    this.requestAnimationFrameId = window.requestAnimationFrame(
+      this.___animate,
+    );
+  }
+
+  ___update() {
     this.stage.update();
+    this.user.update();
+  }
+
+  ___draw() {
+    const { stageWidth, stageHeight } = options.game.stage;
 
     this.context.clearRect(0, 0, stageWidth, stageHeight);
     this.stage.draw(this.context);
-
-    this.requestAnimationFrameId = window.requestAnimationFrame(this.___runner);
+    this.user.draw(this.context);
   }
 }
