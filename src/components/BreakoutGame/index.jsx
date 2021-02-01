@@ -2,12 +2,12 @@ import React, { PureComponent } from 'react';
 
 import { StyleSheet, css } from 'aphrodite';
 
-import Game from './Game';
+import Game from './Core/Game';
 import options from './Options';
 
-import './retroFont.css';
+import './font/retroFont.css';
 
-const { stageWidth, stageHeight } = options.game.stage;
+const { stageWidth, stageHeight } = options.shape.stage;
 
 const styles = StyleSheet.create({
   root: {
@@ -48,7 +48,7 @@ export default class Canvas extends PureComponent {
     this.ctx.scale(ratio, ratio);
 
     this.game = new Game();
-    this.game.init(this.ctx);
+    this.game.onCreated(this.ctx);
   }
 
   componentDidMount() {

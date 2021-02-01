@@ -1,5 +1,4 @@
-import { rgbToHex } from '@material-ui/core';
-import MathExtend from '../../../utils/mathExtend';
+import { fmod } from './Number';
 
 export default class Vector2D {
   x: number;
@@ -53,10 +52,7 @@ export default class Vector2D {
 
   // x 축 양의 방향으로 부터 이 백터까지 반시계 방향으로 잰 각도
   polar(): number {
-    return MathExtend.fmod(
-      Math.atan2(this.y, this.x) + 2 * Math.PI,
-      2 * Math.PI,
-    );
+    return fmod(Math.atan2(this.y, this.x) + 2 * Math.PI, 2 * Math.PI);
   }
 
   //외적, 내적
@@ -76,5 +72,12 @@ export default class Vector2D {
 
   clone(): Vector2D {
     return new Vector2D(this.x, this.y);
+  }
+
+  static createByPolorCoord(radius: number, theta: number): Vector2D {
+    const dx = radius * Math.cos((theta * Math.PI) / 180);
+    const dy = radius * Math.sin((theta * Math.PI) / 180);
+
+    return new Vector2D(dx, dy);
   }
 }
