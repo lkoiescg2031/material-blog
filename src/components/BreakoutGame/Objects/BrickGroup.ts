@@ -39,6 +39,7 @@ export default class BrickGroup {
           startY + (rowIdx + 1) * between + rowIdx * height, // y
           width, // width
           this.durability, // durabliity
+          [rowIdx, colIdx], // index
         );
         return brick;
       }),

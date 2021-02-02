@@ -11,13 +11,23 @@ export default class Bullet {
   bounce: number;
   isAlive: boolean;
 
-  constructor(x: number, y: number, dir: number, initialBunce: number) {
+  index: number;
+
+  constructor(
+    x: number,
+    y: number,
+    dir: number,
+    initialBunce: number,
+    index: number,
+  ) {
     this.curPos = new Vector2D(x, y);
     this.prevPos = new Vector2D(x, y);
     this.setMove(dir);
 
     this.bounce = initialBunce;
-    this.isAlive = this.bounce !== 0;
+    this.isAlive = this.bounce >= 0;
+
+    this.index = index;
   }
 
   // 총알 위치 값을 (x,y) 로 설정
@@ -27,15 +37,21 @@ export default class Bullet {
   }
 
   // 운동량 변경
-  setMove(degree: number): void {
-    const { speed, radius } = options.shape.bullet;
-    this.move = Vector2D.createByPolorCoord(speed * 2 * radius, degree);
+  setMove(x: number, y?: number): void {
+    const degree = x;
+
+    if (typeof y === 'undefined') {
+      const { speed, radius } = options.shape.bullet;
+      this.move = Vector2D.createByPolorCoord(speed * 2 * radius, degree);
+    } else {
+      this.move = new Vector2D(x, y);
+    }
   }
 
   //damage 만큼 바운스 횟수 감소
   attacked(damaged: number): void {
-    this.bounce = Math.max(0, this.bounce - damaged);
-    this.isAlive = this.bounce !== 0;
+    this.bounce = Math.max(-1, this.bounce - damaged);
+    this.isAlive = this.bounce >= 0;
   }
 
   // 총알을 move 만큼 이동함

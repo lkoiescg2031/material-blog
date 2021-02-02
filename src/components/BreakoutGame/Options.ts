@@ -38,7 +38,6 @@ const shape = {
     radius: 3,
     color: theme.palette.outter,
     speed: 1,
-    power: 1,
   },
 };
 

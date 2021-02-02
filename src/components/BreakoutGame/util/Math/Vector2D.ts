@@ -16,7 +16,7 @@ export default class Vector2D {
 
   ltTo(rhs: Vector2D): boolean {
     if (rhs.x === this.x) {
-      return this.y < rhs.x;
+      return this.y < rhs.y;
     }
     return this.x < rhs.x;
   }

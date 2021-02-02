@@ -12,8 +12,18 @@ export default class Brick {
   durability: number;
   isAlive: boolean;
 
-  constructor(x: number, y: number, width: number, durability: number) {
+  index: [number, number];
+
+  constructor(
+    x: number,
+    y: number,
+    width: number,
+    durability: number,
+    index: [number, number],
+  ) {
     const { height } = options.shape.brick;
+
+    this.index = index;
 
     this.pos = new Vector2D(x, y);
     this.width = width;

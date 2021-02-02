@@ -49,6 +49,7 @@ export default class BulletGroup {
           this.pos.y - dirVector.y * index, // y
           this.dir, // direction; unit: degree
           this.bounce, // bounce
+          index,
         ),
     );
   }

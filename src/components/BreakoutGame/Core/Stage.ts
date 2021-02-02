@@ -1,8 +1,10 @@
 import AbstractStage, { StageState } from './AbstractStage';
 
-import BrickGroup2D from '../Objects/BrickGroup';
-import User from '../Objects/User';
+import BrickGroup from '../Objects/BrickGroup';
 import BulletGroup from '../Objects/BulletGroup';
+import User from '../Objects/User';
+
+import Collision from './Collision';
 
 import options from '../Options';
 
@@ -13,10 +15,10 @@ export default class Stage extends AbstractStage {
 
   // elements
   user: User;
-  bricks: BrickGroup2D;
+  bricks: BrickGroup;
   bullets: BulletGroup;
 
-  constructor(user: User, bullets: BulletGroup, bricks: BrickGroup2D) {
+  constructor(user: User, bullets: BulletGroup, bricks: BrickGroup) {
     super();
 
     this.user = user;
@@ -59,17 +61,17 @@ export default class Stage extends AbstractStage {
 
       let isCollided: boolean = bullet.isAlive === false;
 
-      // // 총알이 이미 죽어있으면 벽과 충돌검사를 하지 않음
-      // if (isCollided) {
-      //   return;
-      // }
-      // isCollided = bullet.updateWallCollision(this.user);
+      // 총알이 이미 죽어있으면 벽과 충돌검사를 하지 않음
+      if (isCollided) {
+        return;
+      }
+      isCollided = Collision.Bullet2Wall(bullet, this.user);
 
-      // // 벽과 충돌한 적이 있으면 벽돌과 충돌 검사를 하지 않음
-      // if (isCollided) {
-      //   return;
-      // }
-      // this.bricks.collisionUpdate(bullet, this.user);
+      // 벽과 충돌한 적이 있으면 벽돌과 충돌 검사를 하지 않음
+      if (isCollided) {
+        return;
+      }
+      isCollided = Collision.Bullet2Bricks(bullet, this.bricks, this.user);
     });
 
     if (this.bullets.getAliveCounts() === 0) {

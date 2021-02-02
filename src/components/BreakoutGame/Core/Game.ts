@@ -27,7 +27,7 @@ export default class Game extends AbstractStageGame {
   protected onInitialized(t: DOMHighResTimeStamp): GameState {
     //user 초기화
     this.user.setScore(0);
-    this.user.setAbility(1, 1000); // ballSize, bounce
+    this.user.setAbility(10, 1); // ballSize, bounce
     // bullets 초기화
     this.bullets.setSize(this.user.ballSize);
     this.bullets.setBounce(this.user.bounce);
