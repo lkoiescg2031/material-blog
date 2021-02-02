@@ -9,7 +9,7 @@ import Brick from '../../Objects/Brick';
 import Vector2D from '../../util/Math/Vector2D';
 import {
   segmentIntersectsWithPoint,
-  collsiionTime,
+  hitCircleTime,
   isPointInBox,
   getReflectCircle,
 } from '../../util/Math/Geometry';
@@ -21,7 +21,7 @@ function isHitCorner(
   circleDir: Vector2D,
   radius: number,
 ): { isHit: boolean; point?: Vector2D } {
-  const hitTime = collsiionTime(prevPos, dir, center, radius);
+  const hitTime = hitCircleTime(prevPos, dir, center, radius);
 
   //충돌 하지 않은 경우
   if (Math.abs(1 - hitTime) >= Number.EPSILON) {
