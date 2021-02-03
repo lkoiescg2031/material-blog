@@ -33,27 +33,31 @@ export default class Game extends AbstractStageGame {
     this.bullets.setBounce(this.user.bounce);
     // brick 초기화
     this.bricks.setSize(6, 5); // row, col
+    this.bricks.setDurability(0);
     // stage 초기화
-    this.stage.setStage(1, 5); // level, try
+    this.stage.setStage(0, 5); // level, try
 
     return 'ready';
   }
 
   protected onReady(t: DOMHighResTimeStamp): GameState {
-    // TODO 게임 시작 대기 관련 데이터 초기화
     // TODO 터치 시 다음 화면으로 넘어감
     return 'prepareStage';
   }
 
   protected onPrepareStage(t: DOMHighResTimeStamp): GameState {
-    // TODO stage,brick 난이도 데이터 초기화
-    // TODO user,bullets 능력치 초기화
-    // this.___updateStage();
-    // this.user.levelUpdate();
-
-    this.bricks.setDurability(10);
-    this.bricks.create();
-
+    //사용자 업데이트
+    this.user.addAbility(5, 0);
+    // bullet 업데이트
+    this.bullets.reload();
+    this.bullets.setSize(this.user.ballSize);
+    this.bullets.setBounce(this.user.bounce);
+    //brick 업데이트
+    this.bricks.setDurability(this.bricks.durability + 10);
+    //stage 업데이트
+    this.stage.setStage(this.stage.level + 1, this.stage.tryCount + 5);
+    // 스테이지 실행 준비
+    this.stage.onPrepared();
     return 'runStage';
   }
 
@@ -61,8 +65,10 @@ export default class Game extends AbstractStageGame {
     this.stage.runStage();
 
     if (this.stage.tryCount <= 0) {
+      this.stage.onStop();
       return 'initialize';
     } else if (this.bricks.getAliveCount() === 0) {
+      this.stage.onStop();
       return 'prepareStage';
     } else {
       return 'runStage';

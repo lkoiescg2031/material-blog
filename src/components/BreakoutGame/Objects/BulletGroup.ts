@@ -21,6 +21,10 @@ export default class BulletGroup {
     this.bullets = [];
   }
 
+  reload(): void {
+    this.bullets = [];
+  }
+
   setSize(size: number): void {
     this.size = size;
   }

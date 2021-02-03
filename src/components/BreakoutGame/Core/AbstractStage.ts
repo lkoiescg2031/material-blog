@@ -3,25 +3,29 @@ import options from '../Options';
 export type StageState = 'initPos' | 'initDir' | 'updateBullet';
 
 export default abstract class Stage {
-  stageState: StageState;
+  curState: StageState;
+  isRunning: boolean;
 
   constructor() {}
 
-  protected onInitialized(): void {
-    this.stageState = 'initPos';
+  onPrepared(): void {
+    this.curState = 'initPos';
+    this.isRunning = false;
   }
 
   runStage(): void {
-    switch (this.stageState) {
+    this.isRunning = true;
+
+    switch (this.curState) {
       default:
       case 'initPos':
-        this.stageState = this.onInitPos();
+        this.curState = this.onInitPos();
         break;
       case 'initDir':
-        this.stageState = this.onInitDir();
+        this.curState = this.onInitDir();
         break;
       case 'updateBullet':
-        this.stageState = this.onUpdateBullet();
+        this.curState = this.onUpdateBullet();
         break;
     }
   }
@@ -29,6 +33,10 @@ export default abstract class Stage {
   protected abstract onInitPos(): StageState;
   protected abstract onInitDir(): StageState;
   protected abstract onUpdateBullet(): StageState;
+
+  onStop() {
+    this.isRunning = false;
+  }
 
   draw(ctx: CanvasRenderingContext2D): void {
     const { stage } = options.shape;

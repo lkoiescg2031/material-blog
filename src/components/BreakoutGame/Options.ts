@@ -26,6 +26,7 @@ const shape = {
     fontColor: theme.palette.inner,
     fontBig: retroFont(8),
     fontSmall: retroFont(7),
+    speed: 11,
   },
   brick: {
     height: 18,
