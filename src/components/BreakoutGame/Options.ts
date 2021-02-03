@@ -6,6 +6,9 @@ const theme = {
     outter: '#7E7E7D',
     inner: '#FAD0C9',
   },
+  font: {
+    retroFont,
+  },
 };
 
 // new version

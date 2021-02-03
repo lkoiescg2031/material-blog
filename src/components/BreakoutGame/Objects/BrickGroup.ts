@@ -15,6 +15,10 @@ export default class BrickGroup {
     this.bricks = [];
   }
 
+  clear() {
+    this.bricks = [];
+  }
+
   setSize(row: number, col: number): void {
     this.rowSize = row;
     this.colSize = col;
