@@ -95,11 +95,10 @@ export default class Game extends AbstractStageGame {
     this.user.addAbility(10, 1); //ballSize, bounce
     // bullet 업데이트
     this.bullets.reload();
-    //FIXME Observer로 user 구독
     this.bullets.setSize(this.user.ballSize);
     this.bullets.setBounce(this.user.bounce);
     //brick 업데이트
-    this.bricks.setDurability(this.bricks.durability + 10);
+    this.bricks.setDurability(this.bricks.durability + 100);
     //stage 업데이트
     this.stage.setStage(
       this.stage.level + 1, // stageLevel

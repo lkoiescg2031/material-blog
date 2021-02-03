@@ -16,6 +16,7 @@ import {
 
 function isHitCorner(
   prevPos: Vector2D,
+  curPos: Vector2D,
   dir: Vector2D,
   center: Vector2D,
   circleDir: Vector2D,
@@ -23,10 +24,11 @@ function isHitCorner(
 ): { isHit: boolean; point?: Vector2D } {
   const hitTime = hitCircleTime(prevPos, dir, center, radius);
 
-  //충돌 하지 않은 경우
-  if (Math.abs(1 - hitTime) >= Number.EPSILON) {
+  //다음 이동전에 충돌 하지 않은 경우
+  if (hitTime - 1 > Number.EPSILON) {
     return { isHit: false };
   }
+
   // point = prevPos + dir * hitTime
   const point = prevPos.add(dir.mul(hitTime));
   // point 가 center와 circleDir 이 이루는 사분 원에 있는 지 확인
@@ -43,7 +45,7 @@ export default function Bullet2Brick(
   brick: Brick,
   user: User,
 ): boolean {
-  const { radius } = options.shape.bullet;
+  const { radius, speed } = options.shape.bullet;
   const { height } = options.shape.brick;
 
   const perPoint = 10;
@@ -73,7 +75,7 @@ export default function Bullet2Brick(
     center: Vector2D,
     radius: number,
     circleDir: Vector2D,
-  ) => isHitCorner(prevPos, move, center, circleDir, radius);
+  ) => isHitCorner(prevPos, curPos, move, center, circleDir, radius);
 
   //top right corner
   const topRightCorner = new Vector2D(brickRightX, brickTopY);
@@ -84,7 +86,11 @@ export default function Bullet2Brick(
   );
   if (topRightHit.isHit) {
     //총알 충돌 처리
-    const reflect = getReflectCircle(move, topRightCorner, topRightHit.point);
+    const reflect: Vector2D = getReflectCircle(
+      move,
+      topRightCorner,
+      topRightHit.point,
+    ).mul(2 * radius * speed);
     bullet.setMove(reflect.x, reflect.y);
     bullet.setPos(topRightHit.point.x, topRightHit.point.y);
     //블럭 충돌 처리
@@ -102,7 +108,11 @@ export default function Bullet2Brick(
   );
   if (topLeftHit.isHit) {
     //총알 충돌 처리
-    const reflect = getReflectCircle(move, topLeftCorner, topLeftHit.point);
+    const reflect: Vector2D = getReflectCircle(
+      move,
+      topLeftCorner,
+      topLeftHit.point,
+    ).mul(2 * radius * speed);
     bullet.setMove(reflect.x, reflect.y);
     bullet.setPos(topLeftHit.point.x, topLeftHit.point.y);
     //블럭 충돌 처리
@@ -121,18 +131,17 @@ export default function Bullet2Brick(
   );
   if (bottomRightHit.isHit) {
     // 총알 충돌 처리
-    const reflect = getReflectCircle(
+    const reflect: Vector2D = getReflectCircle(
       move,
       bottomRightCorner,
       bottomRightHit.point,
-    );
+    ).mul(2 * radius * speed);
     bullet.setMove(reflect.x, reflect.y);
     bullet.setPos(bottomRightHit.point.x, bottomRightHit.point.y);
     // 블럭 충돌 처리
     brick.attacked(damage);
     // 유저 점수 획득
     user.setScore(user.score + perPoint);
-    console.log('bottomRight');
     return true;
   }
 
@@ -145,11 +154,11 @@ export default function Bullet2Brick(
   );
   if (bottomLeftHit.isHit) {
     // 총알 충돌 처리
-    const reflect = getReflectCircle(
+    const reflect: Vector2D = getReflectCircle(
       move,
       bottomLeftCorner,
       bottomLeftHit.point,
-    );
+    ).mul(2 * radius * speed);
     bullet.setMove(reflect.x, reflect.y);
     bullet.setPos(bottomLeftHit.point.x, bottomLeftHit.point.y);
     // 블럭 충돌 처리

@@ -6,12 +6,8 @@ import Bullet from '../../Objects/Bullet';
 
 // math
 import Vector2D from '../../util/Math/Vector2D';
-import {
-  isPointInBox,
-  segmentIntersectsWithPoint,
-} from '../../util/Math/Geometry';
+import { segmentIntersectsWithPoint } from '../../util/Math/Geometry';
 
-//FIXME 모서리에서 충돌 처리되지 않는 현상
 export default function Bullet2Wall(bullet: Bullet, user: User): boolean {
   //Game 외형 옵션
   const { radius } = options.shape.bullet;

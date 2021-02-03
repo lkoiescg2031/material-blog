@@ -94,6 +94,7 @@ export function segmentIntersectsWithPoint(
   else {
     const isInSegment: boolean =
       inBoundingRectangle(point, a, b) && inBoundingRectangle(point, c, d);
+
     if (isInSegment) {
       return { isIntersect: true, point };
     } else {
