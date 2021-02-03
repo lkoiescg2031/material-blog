@@ -8,9 +8,6 @@ export default class User {
   ballSize: number;
   bounce: number;
 
-  posX: number;
-  dir: number;
-
   constructor() {
     this.maxScore = 0;
   }

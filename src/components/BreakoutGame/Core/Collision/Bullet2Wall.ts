@@ -39,14 +39,9 @@ export default function Bullet2Wall(bullet: Bullet, user: User): boolean {
   const isCrossing = (a: Vector2D, b: Vector2D) =>
     segmentIntersectsWithPoint(a, b, prevPos, curPos);
 
-  //이전 위치가 경계선 밖인 경우 (경계선 포함)
-  if (!isPointInBox(prevPos, topLeft, botRight)) {
-    return false;
-  }
-
   //왼쪽 벽 충돌
   const leftCrossing = isCrossing(topLeft, botLeft);
-  if (leftCrossing.isIntersect) {
+  if (bullet.move.x < 0 && leftCrossing.isIntersect) {
     // 총알 충돌 처리
     bullet.setPos(leftCrossing.point.x, leftCrossing.point.y);
     bullet.setMove(bullet.move.x * -1, bullet.move.y);
@@ -57,7 +52,7 @@ export default function Bullet2Wall(bullet: Bullet, user: User): boolean {
 
   //오른쪽 벽 충돌
   const rightCrossing = isCrossing(topRight, botRight);
-  if (rightCrossing.isIntersect) {
+  if (bullet.move.x > 0 && rightCrossing.isIntersect) {
     // 총알 방향 전환
     bullet.setPos(rightCrossing.point.x, rightCrossing.point.y);
     bullet.setMove(bullet.move.x * -1, bullet.move.y);
@@ -68,7 +63,7 @@ export default function Bullet2Wall(bullet: Bullet, user: User): boolean {
 
   // 상단 벽 충돌
   const topCrossing = isCrossing(topLeft, topRight);
-  if (topCrossing.isIntersect) {
+  if (bullet.move.y < 0 && topCrossing.isIntersect) {
     // 총알 충돌 처리
     bullet.setPos(topCrossing.point.x, topCrossing.point.y);
     bullet.setMove(bullet.move.x, bullet.move.y * -1);
@@ -78,10 +73,10 @@ export default function Bullet2Wall(bullet: Bullet, user: User): boolean {
   }
 
   //하단 벽 충돌
-  const botCrossing = isCrossing(botLeft, botRight);
-  if (botCrossing.isIntersect) {
+  const bottomCrossing = isCrossing(botLeft, botRight);
+  if (bullet.move.y > 0 && bottomCrossing.isIntersect) {
     // 총알 충돌 처리
-    bullet.setPos(botCrossing.point.x, botCrossing.point.y);
+    bullet.setPos(bottomCrossing.point.x, bottomCrossing.point.y);
     bullet.setMove(bullet.move.x, bullet.move.y * -1);
     bullet.attacked(damage); //바운스 횟수 감소
     // 유저 점수 증가

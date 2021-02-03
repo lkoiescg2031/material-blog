@@ -92,9 +92,9 @@ export function segmentIntersectsWithPoint(
   }
   // p가 두 선분에 모두 포함 되어 있는 경우에만 참 반환
   else {
-    const isPointInBox =
+    const isInSegment: boolean =
       inBoundingRectangle(point, a, b) && inBoundingRectangle(point, c, d);
-    if (isPointInBox) {
+    if (isInSegment) {
       return { isIntersect: true, point };
     } else {
       return { isIntersect: false };
