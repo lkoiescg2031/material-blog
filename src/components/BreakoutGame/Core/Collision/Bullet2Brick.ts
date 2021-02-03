@@ -91,7 +91,6 @@ export default function Bullet2Brick(
     brick.attacked(damage);
     //유저 점수 획득
     user.setScore(user.score + perPoint);
-    console.log('topRight');
     return true;
   }
   //top left corner
@@ -110,7 +109,6 @@ export default function Bullet2Brick(
     brick.attacked(damage);
     //유저 점수 획득
     user.setScore(user.score + perPoint);
-    console.log('topLeft');
     return true;
   }
 
@@ -158,7 +156,6 @@ export default function Bullet2Brick(
     brick.attacked(damage);
     // 사용자 점수 획득
     user.setScore(user.score + perPoint);
-    console.log('bottomLeft');
     return true;
   }
 
