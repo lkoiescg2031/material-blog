@@ -31,7 +31,7 @@ export default class Game extends AbstractStageGame {
     this.gameOverSizeChange = 0.2;
     this.gameOverStr = 'PRESS START';
 
-    const { stageWidth, stageHeight, scoreBoardHeight } = options.shape.stage;
+    const { stageWidth, stageHeight } = options.shape.stage;
 
     this.stageWidth = stageWidth;
     this.centerX = this.stageWidth / 2;
@@ -92,17 +92,23 @@ export default class Game extends AbstractStageGame {
 
   protected onPrepareStage(t: DOMHighResTimeStamp): GameState {
     //사용자 업데이트
-    this.user.addAbility(5, 0);
+    this.user.addAbility(10, 1); //ballSize, bounce
     // bullet 업데이트
     this.bullets.reload();
+    //FIXME Observer로 user 구독
     this.bullets.setSize(this.user.ballSize);
     this.bullets.setBounce(this.user.bounce);
     //brick 업데이트
     this.bricks.setDurability(this.bricks.durability + 10);
     //stage 업데이트
-    this.stage.setStage(this.stage.level + 1, this.stage.tryCount + 5);
+    this.stage.setStage(
+      this.stage.level + 1, // stageLevel
+      this.stage.tryCount + 5, // tryCount
+    );
     // 스테이지 실행 준비
+    this.bricks.create();
     this.stage.onPrepared();
+
     return 'runStage';
   }
 
@@ -129,25 +135,25 @@ export default class Game extends AbstractStageGame {
     this.bullets.draw(this.context);
 
     if (this.gameState === 'ready') {
-      const { stageColor } = options.shape.stage;
-      const { retroFont } = options.theme.font;
-
-      this.context.beginPath();
-      this.context.font = retroFont(this.gameOverSize);
-      this.context.fillStyle = stageColor;
-      this.context.textAlign = 'center';
-      this.context.textBaseline = 'middle';
-      this.context.fillText(
-        this.gameOverStr,
-        this.centerX,
-        this.centerY,
-        this.stageWidth,
-      );
-      this.context.closePath();
+      this.___drawPressStart(this.context);
     }
   }
 
+  private ___drawPressStart(ctx: CanvasRenderingContext2D): void {
+    const { stageColor } = options.shape.stage;
+    const { retroFont } = options.theme.font;
+
+    ctx.beginPath();
+    ctx.font = retroFont(this.gameOverSize);
+    ctx.fillStyle = stageColor;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(this.gameOverStr, this.centerX, this.centerY, this.stageWidth);
+    ctx.closePath();
+  }
+
   exit() {
+    super.exit();
     window.removeEventListener('click', this.___eventHandler);
   }
 }

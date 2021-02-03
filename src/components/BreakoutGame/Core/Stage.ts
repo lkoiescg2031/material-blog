@@ -8,7 +8,6 @@ import Collision from './Collision';
 
 import options from '../Options';
 import Vector2D from '../util/Math/Vector2D';
-
 export default class Stage extends AbstractStage {
   stageWidth: number;
   stageHeight: number;
@@ -19,8 +18,13 @@ export default class Stage extends AbstractStage {
 
   shootPos: Vector2D;
   movePosSpeed: number;
+  minShootPosX: number;
+  maxShootPosX: number;
+
   shootDir: number;
   moveDirSpeed: number;
+  minShootDir: number;
+  maxShootDir: number;
 
   // elements
   user: User;
@@ -29,20 +33,29 @@ export default class Stage extends AbstractStage {
 
   constructor(user: User, bullets: BulletGroup, bricks: BrickGroup) {
     super();
+
     this.user = user;
     this.bullets = bullets;
     this.bricks = bricks;
 
     const { radius } = options.shape.bullet;
     const { stageWidth, stageHeight, scoreBoardHeight } = options.shape.stage;
-    const { speed } = options.shape.user;
+    const { speedDir, speedPos } = options.shape.user;
 
     this.stageWidth = stageWidth;
     this.stageHeight = stageHeight - scoreBoardHeight;
-    this.shootPos = new Vector2D(0, stageHeight - radius);
-    this.movePosSpeed = speed;
-    this.shootDir = 180;
-    this.moveDirSpeed = speed / 3;
+
+    //shootPos
+    this.minShootPosX = radius;
+    this.maxShootPosX = stageWidth - radius;
+    this.shootPos = new Vector2D(this.minShootPosX, stageHeight - radius);
+    this.movePosSpeed = speedPos;
+
+    //shootDir
+    this.minShootDir = 181;
+    this.maxShootDir = 359;
+    this.shootDir = this.minShootDir;
+    this.moveDirSpeed = speedDir;
 
     window.addEventListener('click', this.___eventHandler.bind(this));
   }
@@ -53,15 +66,13 @@ export default class Stage extends AbstractStage {
     this.tryCount = tryCount;
   }
 
-  onPrepared() {
-    super.onPrepared();
-    this.bricks.create();
-  }
-
   protected onInitPos(): StageState {
     this.shootPos.x += this.movePosSpeed;
 
-    if (this.shootPos.x >= this.stageWidth || this.shootPos.x <= 0) {
+    if (
+      this.shootPos.x >= this.maxShootPosX ||
+      this.shootPos.x <= this.minShootPosX
+    ) {
       this.movePosSpeed *= -1;
     }
 
@@ -71,7 +82,10 @@ export default class Stage extends AbstractStage {
   protected onInitDir(): StageState {
     this.shootDir += this.moveDirSpeed;
 
-    if (this.shootDir <= 180 || this.shootDir >= 360) {
+    if (
+      this.shootDir <= this.minShootDir ||
+      this.shootDir >= this.maxShootDir
+    ) {
       this.moveDirSpeed *= -1;
     }
 
@@ -79,11 +93,14 @@ export default class Stage extends AbstractStage {
   }
 
   protected onUpdateBullet(): StageState {
-    // throw new Error('Method not implemented.');
     this.bullets.bullets.forEach(bullet => {
+      if (bullet.isAlive === false) {
+        return;
+      }
+
       bullet.updatePos();
 
-      let isCollided: boolean = bullet.isAlive === false;
+      let isCollided: boolean = false;
 
       // 총알이 이미 죽어있으면 벽과 충돌검사를 하지 않음
       if (isCollided) {
