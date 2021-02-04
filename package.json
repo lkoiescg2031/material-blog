@@ -10,6 +10,7 @@
     "@material-ui/styles": "^4.11.2",
     "aphrodite": "^2.4.0",
     "clsx": "^1.1.1",
+    "fontsource-roboto": "^4.0.0",
     "gatsby": "^2.26.1",
     "gatsby-image": "^2.5.0",
     "gatsby-plugin-aphrodite": "^2.0.5",

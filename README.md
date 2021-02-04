@@ -19,10 +19,10 @@
      1. 최상단 위치 시 뒷편에서 웨이브 애니메이션 동작 :heavy_check_mark:
      2. 스크롤 시 웨이브 애니메이션 중지 :x:
   2. 상단에 material-ui를 이용한 Appbar 추가 :heavy_check_mark:
-  3. Appbar에 카테고리 추가 추가 ( 항목 : challenges, projects, resume, posts)
+  3. Appbar에 카테고리 추가 추가 ( 항목 : aboutMe, challenges, projects, posts) :heavy_check_mark:
   4. Drawer 추가 :heavy_check_mark:
-  5. Drawer 상단 간략한 프로필 추가
-  6. Drawer Post 위주의 계층 뷰 추가
+  5. Drawer 상단 간략한 프로필 추가 :heavy_check_mark:
+  6. Drawer Post 위주의 계층 뷰 추가 
 
 ### Pages
 
@@ -46,6 +46,9 @@
      1. 포스팅 기능 추가
      2. 포스팅 테그 기능 추가
      3. sns 댓글 기능 추가
+  6. 404 pages
+     1. 페이지를 찾을 수 없음 메시지 표시 :heavy_check_mark:
+     2. 페이지 내 간단한 게임 추가 (Breakout) :heavy_check_mark:
 
 ## Change Log
   2021.01.11        블로그 저장소 생성

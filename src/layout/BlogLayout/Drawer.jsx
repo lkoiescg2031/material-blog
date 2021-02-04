@@ -1,17 +1,29 @@
 import React from 'react';
 
 import clsx from 'clsx';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import Drawer from '@material-ui/core/Drawer';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
 import Hidden from '@material-ui/core/Hidden';
 
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import EmailIcon from '@material-ui/icons/Email';
+import GithubIcon from '@material-ui/icons/GitHub';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 import { Consumer } from './Context';
+import { Divider } from '@material-ui/core';
 
 export const drawerWidth = 240;
 
@@ -19,7 +31,6 @@ const useStyles = makeStyles(theme => ({
   drawer: {},
   drawerPaper: {
     width: drawerWidth,
-    border: 0,
   },
   transParentBackground: {
     backgroundColor: '#00000000',
@@ -34,24 +45,138 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     right: '3px',
   },
+  profileRoot: {
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    alignItems: 'center',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  avatar: {
+    width: theme.spacing(12),
+    height: theme.spacing(12),
+
+    border: `4px solid ${theme.palette.primary.dark}`,
+    backgroundColor: '#fff',
+
+    color: theme.palette.primary.dark,
+    fontSize: theme.spacing(6),
+  },
+  contactWrapper: {
+    display: 'flex',
+    marginTop: theme.spacing(1),
+  },
+  contactIcon: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
 }));
 
 function BlogLayoutDrawer(props) {
   const classes = useStyles();
 
-  const drawerItems = (drawerMenu, toggleDrawer) => (
+  //TODO 카테고리기능 추가
+  const drawerItems = (profile, drawerMenu, toggleDrawer) => (
     <>
       <div className={classes.toolbar}>
         <IconButton className={classes.closeButton} onClick={toggleDrawer}>
           <ArrowBackIosIcon />
         </IconButton>
       </div>
+      <Divider />
+      {profile && (
+        <>
+          <div className={classes.profileRoot}>
+            <Avatar
+              alt={profile.name}
+              src={profile.feature}
+              className={classes.avatar}
+            >
+              {typeof profile.feature === 'undefined' ? profile.name : null}
+            </Avatar>
+            <Typography variant="h6" color="inherit">
+              {profile.name}
+            </Typography>
+            <Typography variant="body2" color="inherit">
+              {profile.desc}
+            </Typography>
+            <div className={classes.contactWrapper}>
+              {profile.email && (
+                <IconButton
+                  className={classes.contactIcon}
+                  href={`mailto:${profile.email}`}
+                >
+                  <EmailIcon />
+                </IconButton>
+              )}
+              {profile.github && (
+                <IconButton
+                  className={classes.contactIcon}
+                  href={profile.github}
+                >
+                  <GithubIcon />
+                </IconButton>
+              )}
+              {profile.facebook && (
+                <IconButton
+                  className={classes.contactIcon}
+                  href={profile.facebook}
+                >
+                  <FacebookIcon />
+                </IconButton>
+              )}
+              {profile.twitter && (
+                <IconButton
+                  className={classes.contactIcon}
+                  href={profile.twitter}
+                >
+                  <TwitterIcon />
+                </IconButton>
+              )}
+              {profile.instagram && (
+                <IconButton
+                  className={classes.contactIcon}
+                  href={profile.instagram}
+                >
+                  <InstagramIcon />
+                </IconButton>
+              )}
+              {profile.linkedIn && (
+                <IconButton
+                  className={classes.contactIcon}
+                  href={profile.linkedIn}
+                >
+                  <LinkedInIcon />
+                </IconButton>
+              )}
+            </div>
+          </div>
+          <Divider />
+        </>
+      )}
+      {/** TODO 하위 항목을 트리뷰로 표현 */}
+      <Button color="inherit" size="large">
+        posts
+      </Button>
+      <Divider />
+      <Button color="inherit" size="large">
+        projects
+      </Button>
+      <Divider />
+      <Button color="inherit" size="large">
+        challenges
+      </Button>
+      <Divider />
+      <Button color="inherit" size="large">
+        aboutMe
+      </Button>
+      <Divider />
       {drawerMenu}
     </>
   );
   return (
     <Consumer>
-      {({ isOpenDrawer, toggleDrawer, drawerElements }) => (
+      {({ isOpenDrawer, toggleDrawer, drawerElements, profile }) => (
         <nav>
           <Hidden smUp implementation="css">
             <SwipeableDrawer
@@ -64,7 +189,7 @@ function BlogLayoutDrawer(props) {
               onOpen={toggleDrawer}
               onClose={toggleDrawer}
             >
-              {drawerItems(drawerElements, toggleDrawer)}
+              {drawerItems(profile, drawerElements, toggleDrawer)}
             </SwipeableDrawer>
           </Hidden>
           <Hidden xsDown implementation="css">
@@ -77,7 +202,7 @@ function BlogLayoutDrawer(props) {
               }}
               open
             >
-              {drawerItems(drawerElements, toggleDrawer)}
+              {drawerItems(profile, drawerElements, toggleDrawer)}
             </Drawer>
           </Hidden>
         </nav>

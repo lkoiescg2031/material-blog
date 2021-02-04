@@ -9,6 +9,7 @@
 // icon fonts
 import './src/fonts/XEIcon-2.2.0/xeicon.min.css';
 import './src/fonts/fontawesome-5.15.2/css/all.min.css';
-
+// fonts
+import 'fontsource-roboto';
 // global styles
 import './src/styles/global.css';

@@ -4,14 +4,20 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
+
 import MenuIcon from '@material-ui/icons/Menu';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import ScrollEffect from './ScrollEffect';
 import { Consumer } from './Context';
+import { Button } from '@material-ui/core';
+import { navigate } from 'gatsby';
 
 const useStyles = makeStyles(theme => ({
   appbar: {
+    borderBottom: `1px solid ${theme.palette.primary.dark}`,
     zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
@@ -21,6 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   title: {
+    flexGrow: 1,
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
   },
@@ -28,12 +35,14 @@ const useStyles = makeStyles(theme => ({
 
 function BlogLayoutAppBar(props) {
   const classes = useStyles();
-
+  const onClicker = url => event => {
+    navigate(url);
+  };
   return (
     <ScrollEffect {...props}>
       <AppBar position="fixed" className={classes.appbar}>
         <Consumer>
-          {({ title, appbarElements, toggleDrawer }) => (
+          {({ title, toggleDrawer }) => (
             <Toolbar>
               <IconButton
                 color="inherit"
@@ -47,7 +56,36 @@ function BlogLayoutAppBar(props) {
               <Typography variant="h4" noWrap className={classes.title}>
                 {title}
               </Typography>
-              {appbarElements}
+              <Hidden xsDown>
+                <Button
+                  color="inherit"
+                  size="large"
+                  onClick={onClicker('/posts')}
+                >
+                  posts
+                </Button>
+                <Button
+                  color="inherit"
+                  size="large"
+                  onClick={onClicker('/projects')}
+                >
+                  projects
+                </Button>
+                <Button
+                  color="inherit"
+                  size="large"
+                  onClick={onClicker('/challenges')}
+                >
+                  challenges
+                </Button>
+                <Button
+                  color="inherit"
+                  size="large"
+                  onClick={onClicker('/aboutme')}
+                >
+                  aboutMe
+                </Button>
+              </Hidden>
             </Toolbar>
           )}
         </Consumer>

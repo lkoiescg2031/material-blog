@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function BlogLayout({ title, appBarMenu, drawerMenu, children }) {
+function BlogLayout({ title, drawerMenu, children }) {
   const classes = useStyles();
   const [isOpenDrawer, setDrawer] = React.useState(false);
 
@@ -45,11 +45,22 @@ function BlogLayout({ title, appBarMenu, drawerMenu, children }) {
   return (
     <Provider
       value={{
-        title,
-        appbarElements: appBarMenu,
+        title: title || 'SW Dev blog',
         drawerElements: drawerMenu,
         isOpenDrawer,
         toggleDrawer,
+        profile: {
+          name: '김태홍',
+          feature: null, // 외형 이미지 url
+          desc: '행복한 삶을 추구하는 개발자 입니다.',
+          email: 'lkoiescg2031@naver.com',
+          // sns urls
+          github: 'https://github.com/lkoiescg2031',
+          twitter: null,
+          facebook: null,
+          instagram: null,
+          linkedin: null,
+        },
       }}
     >
       <ThemeProvider theme={globalTheme}>
