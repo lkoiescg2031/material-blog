@@ -56,7 +56,7 @@ function BlogLayoutAppBar(props) {
               <Typography variant="h4" noWrap className={classes.title}>
                 {title}
               </Typography>
-              <Hidden xsDown>
+              <Hidden xsDown implementation="css">
                 <Button
                   color="inherit"
                   size="large"
@@ -71,6 +71,8 @@ function BlogLayoutAppBar(props) {
                 >
                   projects
                 </Button>
+              </Hidden>
+              <Hidden implementation="css" smDown>
                 <Button
                   color="inherit"
                   size="large"

@@ -59,9 +59,10 @@ export default class WaveAniBackground extends PureComponent {
 
     //handle Wave ani
     this.___resize = this.___resize.bind(this);
-    this.update = this.update.bind(this);
+    this.updateBackground = this.updateBackground.bind(this);
     this.___animate = this.___animate.bind(this);
-    this.toggleAnimation = this.toggleAnimation.bind(this);
+    this.runAnimation = this.runAnimation.bind(this);
+    this.stopAnimation = this.stopAnimation.bind(this);
   }
 
   ___resize() {
@@ -75,29 +76,29 @@ export default class WaveAniBackground extends PureComponent {
     this.ctx.scale(ratio, ratio);
 
     this.waveGroupAni.resize(this.stageWidth, this.stageHeight);
+    this.updateBackground();
   }
 
   ___animate(t) {
-    this.update();
+    this.updateBackground();
     this.requestAnimationFrameId = window.requestAnimationFrame(
       this.___animate,
     );
   }
 
-  update() {
+  updateBackground() {
     this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
     this.waveGroupAni.draw(this.ctx);
   }
 
-  toggleAnimation() {
-    if (this.requestAnimationFrameId === 0) {
-      this.requestAnimationFrameId = window.requestAnimationFrame(
-        this.___animate,
-      );
-    } else {
-      window.cancelAnimationFrame(this.requestAnimationFrameId);
-      this.requestAnimationFrameId = 0;
-    }
+  runAnimation() {
+    this.requestAnimationFrameId = window.requestAnimationFrame(
+      this.___animate,
+    );
+  }
+  stopAnimation() {
+    window.cancelAnimationFrame(this.requestAnimationFrameId);
+    this.requestAnimationFrameId = 0;
   }
 
   componentDidMount() {
@@ -111,12 +112,13 @@ export default class WaveAniBackground extends PureComponent {
 
     window.addEventListener('resize', this.___resize, false);
     this.___resize();
-
-    this.toggleAnimation();
   }
 
   componentWillUnmount() {
-    window.cancelAnimationFrame(this.requestAnimationFrameId)
+    if (this.requestAnimationFrameId !== 0) {
+      this.stopAnimation();
+    }
+    window.removeEventListener('resize', this.___resize, false);
   }
 
   render() {
