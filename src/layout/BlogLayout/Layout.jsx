@@ -14,11 +14,15 @@ import Drawer, { drawerWidth } from './Drawer';
 
 class BlogLayout extends React.PureComponent {
   static propTypes = {
-    title: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    profile: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
     title: '',
+    profile: {},
+    categories: {},
   };
 
   constructor(props) {
@@ -26,7 +30,9 @@ class BlogLayout extends React.PureComponent {
 
     this.state = { isOpenDrawer: false };
     this.backgroundRef = React.createRef();
+
     this.onScroll = this.onScroll.bind(this);
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
   toggleDrawer(event) {
@@ -54,33 +60,23 @@ class BlogLayout extends React.PureComponent {
     this.backgroundRef.current.runAnimation();
     window.addEventListener('scroll', this.onScroll, false);
   }
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll, false);
   }
 
   render() {
-    const { classes, title, drawerMenu, children } = this.props;
+    const { classes, title, categories, profile, children } = this.props;
     const { isOpenDrawer } = this.state;
 
     return (
       <Provider
         value={{
-          title: title || 'SW Dev blog',
-          drawerElements: drawerMenu,
+          title: title,
+          categories,
           isOpenDrawer,
           toggleDrawer: this.toggleDrawer,
-          profile: {
-            name: '김태홍',
-            feature: null, // 외형 이미지 url
-            desc: '행복한 삶을 추구하는 개발자 입니다.',
-            email: 'lkoiescg2031@naver.com',
-            // sns urls
-            github: 'https://github.com/lkoiescg2031',
-            twitter: null,
-            facebook: null,
-            instagram: null,
-            linkedin: null,
-          },
+          profile,
         }}
       >
         <ThemeProvider theme={globalTheme}>

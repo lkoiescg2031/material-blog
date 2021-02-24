@@ -5,3 +5,11 @@
  */
 
 // You can delete this file if you're not using it
+
+const CategoryBuilder = require('./gatsby-modules/gatsby-category.js');
+
+exports.sourceNodes = (...params) => {
+  // add categories in graphql
+  const categoryBuilder = new CategoryBuilder(params[0]);
+  categoryBuilder.build();
+};

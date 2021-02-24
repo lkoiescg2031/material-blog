@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+import { navigate } from 'gatsby';
 import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,7 +13,8 @@ import Typography from '@material-ui/core/Typography';
 
 import Hidden from '@material-ui/core/Hidden';
 
-import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import IconButton from '@material-ui/core/IconButton';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -23,9 +26,44 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 import { Consumer } from './Context';
-import { Divider } from '@material-ui/core';
 
 export const drawerWidth = 240;
+
+const usePostsButtonStyle = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0.5, 0.5),
+    textAlign: 'left',
+  },
+  text: {
+    fontWeight: 'inherit',
+    flexGrow: 1,
+  },
+  info: {
+    marginLeft: 'auto',
+  },
+}));
+
+const PostsButton = ({ name, info, level, url }) => {
+  const classes = usePostsButtonStyle();
+  return (
+    <ButtonBase classes={{ root: classes.root }} onClick={e => navigate(url)}>
+      <Typography className={classes.text} variant="body1">
+        {`${level > 0 ? '└'.padEnd(level, '─') : ''}\t${name}`}
+      </Typography>
+      <Typography variant="caption" color="inherit">
+        {info.toLocaleString()}
+      </Typography>
+    </ButtonBase>
+  );
+};
+
+PostsButton.propTypes = {
+  name: PropTypes.string.isRequired,
+  level: PropTypes.number.isRequired,
+  info: PropTypes.number.isRequired,
+};
 
 const useStyles = makeStyles(theme => ({
   drawer: {},
@@ -70,13 +108,17 @@ const useStyles = makeStyles(theme => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
   },
+  postsTreeRoot: {
+    height: 240,
+    flexGrow: 1,
+    maxWidth: 400,
+  },
 }));
 
 function BlogLayoutDrawer(props) {
   const classes = useStyles();
 
-  //TODO 카테고리기능 추가
-  const drawerItems = (profile, drawerMenu, toggleDrawer) => (
+  const drawerItems = (toggleDrawer, profile, categories) => (
     <>
       <div className={classes.toolbar}>
         <IconButton className={classes.closeButton} onClick={toggleDrawer}>
@@ -89,10 +131,10 @@ function BlogLayoutDrawer(props) {
           <div className={classes.profileRoot}>
             <Avatar
               alt={profile.name}
-              src={profile.feature}
+              src={profile.figure}
               className={classes.avatar}
             >
-              {typeof profile.feature === 'undefined' ? profile.name : null}
+              {typeof profile.figure === 'undefined' ? profile.name : null}
             </Avatar>
             <Typography variant="h6" color="inherit">
               {profile.name}
@@ -152,31 +194,29 @@ function BlogLayoutDrawer(props) {
             </div>
           </div>
           <Divider />
+          {(function renderPosts(nodes, level = 0) {
+            return nodes.map(node => (
+              <React.Fragment key={node.url}>
+                <PostsButton
+                  name={node.name}
+                  info={node.postsCnt}
+                  url={node.url}
+                  level={level}
+                />
+                {Array.isArray(node.childrenCategory)
+                  ? renderPosts(node.childrenCategory, level + 1)
+                  : null}
+              </React.Fragment>
+            ));
+          })([categories])}
+          <Divider />
         </>
       )}
-      {/** TODO 하위 항목을 트리뷰로 표현 */}
-      <Button color="inherit" size="large">
-        posts
-      </Button>
-      <Divider />
-      <Button color="inherit" size="large">
-        projects
-      </Button>
-      <Divider />
-      <Button color="inherit" size="large">
-        challenges
-      </Button>
-      <Divider />
-      <Button color="inherit" size="large">
-        aboutMe
-      </Button>
-      <Divider />
-      {drawerMenu}
     </>
   );
   return (
     <Consumer>
-      {({ isOpenDrawer, toggleDrawer, drawerElements, profile }) => (
+      {({ isOpenDrawer, toggleDrawer, categories, profile }) => (
         <nav>
           <Hidden smUp implementation="css">
             <SwipeableDrawer
@@ -189,7 +229,7 @@ function BlogLayoutDrawer(props) {
               onOpen={toggleDrawer}
               onClose={toggleDrawer}
             >
-              {drawerItems(profile, drawerElements, toggleDrawer)}
+              {drawerItems(toggleDrawer, profile, categories)}
             </SwipeableDrawer>
           </Hidden>
           <Hidden xsDown implementation="css">
@@ -202,7 +242,7 @@ function BlogLayoutDrawer(props) {
               }}
               open
             >
-              {drawerItems(profile, drawerElements, toggleDrawer)}
+              {drawerItems(toggleDrawer, profile, categories)}
             </Drawer>
           </Hidden>
         </nav>

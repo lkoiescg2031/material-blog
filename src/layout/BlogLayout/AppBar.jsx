@@ -64,15 +64,15 @@ function BlogLayoutAppBar(props) {
                 >
                   posts
                 </Button>
-                <Button
+                {/* <Button
                   color="inherit"
                   size="large"
                   onClick={onClicker('/projects')}
                 >
                   projects
-                </Button>
+                </Button> */}
               </Hidden>
-              <Hidden implementation="css" smDown>
+              {/* <Hidden implementation="css" smDown>
                 <Button
                   color="inherit"
                   size="large"
@@ -87,7 +87,7 @@ function BlogLayoutAppBar(props) {
                 >
                   aboutMe
                 </Button>
-              </Hidden>
+              </Hidden> */}
             </Toolbar>
           )}
         </Consumer>

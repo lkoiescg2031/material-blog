@@ -1,2 +1,2 @@
-import Container from './Layout';
+import Container from './Container';
 export default Container;

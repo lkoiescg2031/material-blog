@@ -43,6 +43,7 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+
     // for typescript
     {
       resolve: `gatsby-plugin-typescript`,
@@ -52,8 +53,10 @@ module.exports = {
         allExtensions: true, // defaults to false
       },
     },
+
     // aphrodite
     `gatsby-plugin-aphrodite`,
+
     // for material ui
     {
       resolve: `gatsby-plugin-material-ui`,
@@ -69,5 +72,16 @@ module.exports = {
         displayName: false,
       },
     },
+
+    //for markdown
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts`,
+        ignore: ['**/README.md'],
+      },
+    },
+    `gatsby-transformer-remark`,
   ],
 };
