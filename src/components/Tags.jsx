@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
+
+import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
+
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 const useTagStyle = makeStyles(theme => ({
   tagWrapper: {
@@ -12,6 +16,14 @@ const useTagStyle = makeStyles(theme => ({
     flexWrap: 'wrap',
     '& > *': {
       margin: theme.spacing(0.5),
+    },
+  },
+  tagLabel: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& > *': {
+      margin: theme.spacing(0.2),
     },
   },
   alignRight: {
@@ -43,7 +55,12 @@ function Tags({ tags, align, outlined, medium }) {
           variant={outlined ? 'outlined' : 'default'}
           size={medium ? 'medium' : 'small'}
           color="secondary"
-          label={tag}
+          label={
+            <div className={classes.tagLabel}>
+              <LocalOfferIcon fontSize="inherit" color="inherit" />
+              <Typography variant="subtitle2">{tag}</Typography>
+            </div>
+          }
           clickable
           component="a"
           href={`/Tags/${tag}`}

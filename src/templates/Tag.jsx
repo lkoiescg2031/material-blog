@@ -27,7 +27,7 @@ const PostList = ({ data, path, pageContext }) => {
 
   return (
     <BlogLayout>
-      <Category medium pathes={path.split('/').slice(1)} />
+      <Typography variant="h3">{pageContext.slug}</Typography>
       <Typography
         classes={{ root: classes.postCounterRoot }}
         varient="subtitle2"

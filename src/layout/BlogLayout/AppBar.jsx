@@ -13,7 +13,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import ScrollEffect from './ScrollEffect';
 import { Consumer } from './Context';
 import { Button } from '@material-ui/core';
-import { navigate } from 'gatsby';
 
 const useStyles = makeStyles(theme => ({
   appbar: {
@@ -35,9 +34,6 @@ const useStyles = makeStyles(theme => ({
 
 function BlogLayoutAppBar(props) {
   const classes = useStyles();
-  const onClicker = url => event => {
-    navigate(url);
-  };
   return (
     <ScrollEffect {...props}>
       <AppBar position="fixed" className={classes.appbar}>
@@ -57,11 +53,7 @@ function BlogLayoutAppBar(props) {
                 {title}
               </Typography>
               <Hidden xsDown implementation="css">
-                <Button
-                  color="inherit"
-                  size="large"
-                  onClick={onClicker('/posts')}
-                >
+                <Button color="inherit" size="large" href="/Posts">
                   posts
                 </Button>
                 {/* <Button

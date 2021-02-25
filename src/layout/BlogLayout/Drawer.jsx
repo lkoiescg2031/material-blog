@@ -71,6 +71,10 @@ const useStyles = makeStyles(theme => ({
   drawer: {},
   drawerPaper: {
     width: drawerWidth,
+    overflow: 'overlay',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   },
   transParentBackground: {
     backgroundColor: '#00000000',
