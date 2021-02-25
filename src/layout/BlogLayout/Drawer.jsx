@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Hidden from '@material-ui/core/Hidden';
 
+import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -52,9 +53,7 @@ const PostsButton = ({ name, info, level, url }) => {
       <Typography className={classes.text} variant="body1">
         {`${level > 0 ? '└'.padEnd(level, '─') : ''}\t${name}`}
       </Typography>
-      <Typography variant="caption" color="inherit">
-        {info.toLocaleString()}
-      </Typography>
+      <Chip size="small" color="secondary" label={info} />
     </ButtonBase>
   );
 };

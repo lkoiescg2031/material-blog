@@ -5,7 +5,7 @@
 ### Landing Page
 
   1. 바탕 + businessCard 으로 구성 :heavy_check_mark:
-  2. businessCard 는 앞면, 뒷면 으로 구성
+  2. businessCard 는 앞면, 뒷면 으로 구성 :heavy_check_mark:
      1. 앞면 카드 구현 :heavy_check_mark:
      2. 뒷면 카드 구헌 :heavy_check_mark:
   3. 앞면 카드에서 클릭시 후면으로 이동 및 에니메이션 추가 :heavy_check_mark:
@@ -17,12 +17,12 @@
 
   1. Background 웨이브 애니메이션 추가 :heavy_check_mark:
      1. 최상단 위치 시 뒷편에서 웨이브 애니메이션 동작 :heavy_check_mark:
-     2. 스크롤 시 웨이브 애니메이션 중지 :x:
+     2. 스크롤 시 웨이브 애니메이션 중지 :heavy_check_mark:
   2. 상단에 material-ui를 이용한 Appbar 추가 :heavy_check_mark:
   3. Appbar에 카테고리 추가 추가 ( 항목 : aboutMe, challenges, projects, posts) :heavy_check_mark:
   4. Drawer 추가 :heavy_check_mark:
   5. Drawer 상단 간략한 프로필 추가 :heavy_check_mark:
-  6. Drawer Post 위주의 계층 뷰 추가 
+  6. Drawer Post 위주의 계층 뷰 추가 :heavy_check_mark:
 
 ### Pages
 
@@ -43,10 +43,15 @@
      3. 이메일 연락 추가
      4. sns 정보 추가
   5. posts pages
-     1. 포스팅 기능 추가
-     2. 포스팅 테그 기능 추가
-     3. sns 댓글 기능 추가
-  6. 404 pages
+     1. 포스팅 기능 추가 :heavy_check_mark:
+     2. 포스팅 테그 기능 추가 :heavy_check_mark:
+     3. 포스팅 카테고리 기능 추가 :heavy_check_mark:
+     4. sns 댓글 기능 추가
+  6. category pages
+     1. 해당 하위 카테고리의 포스팅 모두표시 기능 추가
+  7. tag pages
+     1. 해당 태그를 인용한 포스팅 표시기능 추가
+  8. 404 pages
      1. 페이지를 찾을 수 없음 메시지 표시 :heavy_check_mark:
      2. 페이지 내 간단한 게임 추가 (Breakout) :heavy_check_mark:
 

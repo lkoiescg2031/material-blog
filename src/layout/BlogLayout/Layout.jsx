@@ -110,6 +110,7 @@ export default withStyles(theme => ({
   },
   toolbar: theme.mixins.toolbar,
   content: {
+    width: '100%',
     padding: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       marginLeft: drawerWidth,

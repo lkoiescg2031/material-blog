@@ -31,7 +31,7 @@ module.exports = class CategoryBuilder {
 
   extractCategory(postPath, categoryMaps) {
     const [beforePosts, afterPosts] = postPath.split('/posts/');
-    const orderedCateogryNames = ['posts', ...afterPosts.split('/')];
+    const orderedCateogryNames = ['Posts', ...afterPosts.split('/')];
     orderedCateogryNames.pop();
 
     let parentPath = beforePosts;
@@ -55,8 +55,8 @@ module.exports = class CategoryBuilder {
   }
 
   createCategoryNode(parentPath, currentPath, categoryName) {
-    const afterPosts = currentPath.split('/posts/')[1];
-    const relativePath = `/posts${
+    const afterPosts = currentPath.split('/Posts/')[1];
+    const relativePath = `/Posts${
       typeof afterPosts === 'undefined' ? '' : `/${afterPosts}`
     }`;
     return {
