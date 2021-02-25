@@ -48,7 +48,7 @@
      3. 포스팅 카테고리 기능 추가 :heavy_check_mark:
      4. sns 댓글 기능 추가
   6. category pages
-     1. 해당 하위 카테고리의 포스팅 모두표시 기능 추가
+     1. 해당 하위 카테고리의 포스팅 모두표시 기능 추가 :heavy_check_mark:
   7. tag pages
      1. 해당 태그를 인용한 포스팅 표시기능 추가
   8. 404 pages

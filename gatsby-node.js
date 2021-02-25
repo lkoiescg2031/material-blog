@@ -60,13 +60,20 @@ exports.createPages = async ({ graphql, actions }) => {
   `);
 
   //포스트 카테고리별 페이지 생성
-  //FIXME : path 의 특수문자 처리 (#,+)
+  const toRegexStr = str => {
+    return `/${str.replace('+', '\\+')}/`;
+  };
+
+  const toEncode = str => {
+    return str.replace('#', escape('#'));
+  };
+
   result.data.allCategory.nodes.forEach(node => {
     createPage({
-      path: node.url,
+      path: toEncode(node.url),
       component: path.resolve('./src/templates/PostList.jsx'),
       context: {
-        slug: `/${node.url}/`,
+        slug: toRegexStr(node.url),
       },
     });
   });
