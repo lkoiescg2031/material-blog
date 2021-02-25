@@ -50,7 +50,7 @@
   6. category pages
      1. 해당 하위 카테고리의 포스팅 모두표시 기능 추가 :heavy_check_mark:
   7. tag pages
-     1. 해당 태그를 인용한 포스팅 표시기능 추가
+     1. 해당 태그를 인용한 포스팅 표시기능 추가 :heavy_check_mark:
   8. 404 pages
      1. 페이지를 찾을 수 없음 메시지 표시 :heavy_check_mark:
      2. 페이지 내 간단한 게임 추가 (Breakout) :heavy_check_mark:
