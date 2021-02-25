@@ -35,6 +35,11 @@ export default props => (
             }
           }
         }
+        allTag {
+          nodes {
+            name
+          }
+        }
         site {
           siteMetadata {
             title
@@ -59,6 +64,7 @@ export default props => (
         {...props}
         title={data.site.siteMetadata.title}
         categories={data.allCategory.edges[0].node}
+        tags={data.allTag.nodes.map(({ name }) => name)}
         profile={{
           ...data.site.siteMetadata.user,
           desc: data.site.siteMetadata.description,

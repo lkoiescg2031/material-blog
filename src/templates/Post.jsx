@@ -35,7 +35,7 @@ const Post = ({ data }) => {
         {new Date(post.frontmatter.date).toLocaleDateString()}
       </Typography>
       <Divider classes={{ root: classes.titleDivider }} />
-      <Tags alignRight tags={post.frontmatter.tags} />
+      <Tags align="right" tags={post.frontmatter.tags} />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
     </BlogLayout>
   );

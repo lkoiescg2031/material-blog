@@ -16,6 +16,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -28,7 +29,9 @@ import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 import { Consumer } from './Context';
 
-export const drawerWidth = 240;
+import Tags from '../../components/Tags';
+
+export const drawerWidth = 280;
 
 const usePostsButtonStyle = makeStyles(theme => ({
   root: {
@@ -53,7 +56,7 @@ const PostsButton = ({ name, info, level, url }) => {
       <Typography className={classes.text} variant="body1">
         {`${level > 0 ? '└'.padEnd(level, '─') : ''}\t${name}`}
       </Typography>
-      <Chip size="small" color="secondary" label={info} />
+      <Chip size="small" variant="outlined" label={info} />
     </ButtonBase>
   );
 };
@@ -117,7 +120,7 @@ const useStyles = makeStyles(theme => ({
 function BlogLayoutDrawer(props) {
   const classes = useStyles();
 
-  const drawerItems = (toggleDrawer, profile, categories) => (
+  const drawerItems = (toggleDrawer, profile, categories, tags = []) => (
     <>
       <div className={classes.toolbar}>
         <IconButton className={classes.closeButton} onClick={toggleDrawer}>
@@ -209,13 +212,16 @@ function BlogLayoutDrawer(props) {
             ));
           })([categories])}
           <Divider />
+          <Button>Tags</Button>
+          <Tags align="center" tags={tags} />
+          <Divider />
         </>
       )}
     </>
   );
   return (
     <Consumer>
-      {({ isOpenDrawer, toggleDrawer, categories, profile }) => (
+      {({ isOpenDrawer, toggleDrawer, profile, categories, tags }) => (
         <nav>
           <Hidden smUp implementation="css">
             <SwipeableDrawer
@@ -241,7 +247,7 @@ function BlogLayoutDrawer(props) {
               }}
               open
             >
-              {drawerItems(toggleDrawer, profile, categories)}
+              {drawerItems(toggleDrawer, profile, categories, tags)}
             </Drawer>
           </Hidden>
         </nav>
@@ -249,7 +255,5 @@ function BlogLayoutDrawer(props) {
     </Consumer>
   );
 }
-
-BlogLayoutDrawer.propTypes = {};
 
 export default BlogLayoutDrawer;

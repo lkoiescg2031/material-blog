@@ -17,14 +17,25 @@ const useTagStyle = makeStyles(theme => ({
   alignRight: {
     justifyContent: 'flex-end',
   },
+  alignCenter: {
+    justifyContent: 'center',
+  },
 }));
 
-function Tags({ tags, alignRight, outlined, medium }) {
+function Tags({ tags, align, outlined, medium }) {
   const classes = useTagStyle();
 
   return (
     <div
-      className={clsx(classes.tagWrapper, { [classes.alignRight]: alignRight })}
+      className={clsx(
+        classes.tagWrapper,
+        {
+          [classes.alignRight]: align === 'right',
+        },
+        {
+          [classes.alignCenter]: align === 'center',
+        },
+      )}
     >
       {(tags || []).map((tag, idx) => (
         <Chip
@@ -44,13 +55,13 @@ function Tags({ tags, alignRight, outlined, medium }) {
 
 Tags.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  alignRight: PropTypes.bool,
+  align: PropTypes.oneOf(['right', 'left', 'center']),
   outlined: PropTypes.bool,
   medium: PropTypes.bool,
 };
 
 Tags.defaultProps = {
-  alignRight: false,
+  align: 'left',
   outlined: false,
   medium: false,
 };

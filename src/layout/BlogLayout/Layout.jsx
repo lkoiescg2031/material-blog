@@ -17,6 +17,7 @@ class BlogLayout extends React.PureComponent {
     title: PropTypes.string.isRequired,
     profile: PropTypes.object.isRequired,
     categories: PropTypes.object.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
 
   static defaultProps = {
@@ -66,7 +67,7 @@ class BlogLayout extends React.PureComponent {
   }
 
   render() {
-    const { classes, title, categories, profile, children } = this.props;
+    const { classes, title, profile, categories, tags, children } = this.props;
     const { isOpenDrawer } = this.state;
 
     return (
@@ -77,6 +78,7 @@ class BlogLayout extends React.PureComponent {
           isOpenDrawer,
           toggleDrawer: this.toggleDrawer,
           profile,
+          tags,
         }}
       >
         <ThemeProvider theme={globalTheme}>
