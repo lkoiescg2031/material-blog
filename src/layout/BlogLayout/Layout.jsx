@@ -48,17 +48,21 @@ class BlogLayout extends React.PureComponent {
     const { scrollTop } = event.target.scrollingElement;
     const target = this.backgroundRef.current;
 
-    if (scrollTop === 0) {
-      target.runAnimation();
-    } else if (target.requestAnimationFrameId !== 0) {
-      this.backgroundRef.current.stopAnimation();
-    } else {
-      this.backgroundRef.current.updateBackground();
+    if (target) {
+      if (scrollTop === 0) {
+        target.runAnimation();
+      } else if (target.requestAnimationFrameId !== 0) {
+        this.backgroundRef.current.stopAnimation();
+      } else {
+        this.backgroundRef.current.updateBackground();
+      }
     }
   }
 
   componentDidMount() {
-    this.backgroundRef.current.runAnimation();
+    if (this.backgroundRef.current) {
+      this.backgroundRef.current.runAnimation();
+    }
     window.addEventListener('scroll', this.onScroll, false);
   }
 
