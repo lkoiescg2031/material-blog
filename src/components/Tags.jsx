@@ -19,7 +19,7 @@ const useTagStyle = makeStyles(theme => ({
   },
 }));
 
-function Tags({ tags, alignRight, outlined }) {
+function Tags({ tags, alignRight, outlined, medium }) {
   const classes = useTagStyle();
 
   return (
@@ -30,7 +30,7 @@ function Tags({ tags, alignRight, outlined }) {
         <Chip
           key={`tag-${idx}`}
           variant={outlined ? 'outlined' : 'default'}
-          size="small"
+          size={medium ? 'medium' : 'small'}
           color="secondary"
           label={tag}
           clickable
@@ -46,11 +46,13 @@ Tags.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   alignRight: PropTypes.bool,
   outlined: PropTypes.bool,
+  medium: PropTypes.bool,
 };
 
 Tags.defaultProps = {
   alignRight: false,
   outlined: false,
+  medium: false,
 };
 
 export default Tags;

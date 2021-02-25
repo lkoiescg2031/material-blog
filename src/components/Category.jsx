@@ -14,7 +14,7 @@ const usePathStyle = makeStyles(theme => ({
   },
 }));
 
-const Category = ({ pathes }) => {
+const Category = ({ pathes, medium }) => {
   const classes = usePathStyle();
   const [first, ...others] = pathes || [];
 
@@ -30,7 +30,7 @@ const Category = ({ pathes }) => {
       <Chip
         key="category-0"
         color="secondary"
-        size="small"
+        size={medium ? 'medium' : 'small'}
         label={first}
         clickable
         component="a"
@@ -41,7 +41,7 @@ const Category = ({ pathes }) => {
           <KeyboardArrowRightSharpIcon fontSize="small" />
           <Chip
             color="secondary"
-            size="small"
+            size={medium ? 'medium' : 'small'}
             label={other}
             clickable
             component="a"
@@ -55,6 +55,11 @@ const Category = ({ pathes }) => {
 
 Category.propTypes = {
   pathes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  medium: PropTypes.bool,
+};
+
+Category.defaultProps = {
+  medium: false,
 };
 
 export default Category;

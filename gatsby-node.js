@@ -16,8 +16,15 @@ exports.sourceNodes = param1 => {
   categoryBuilder.build();
 };
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions;
+exports.onCreateNode = async ({
+  node,
+  getNode,
+  getNodes,
+  createNodeId,
+  createContentDigest,
+  actions,
+}) => {
+  const { createNodeField, createNode } = actions;
 
   if (node.internal.type === 'MarkdownRemark') {
     const slug = createFilePath({
@@ -31,12 +38,24 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: `slug`,
       value: '/Posts' + slug,
     });
-  } else if (node.internal.type === 'Category') {
-    // createNodeField({
-    //   node,
-    //   name: 'slug',
-    //   value: slug,
-    // });
+    // 테그 생성
+    const tags = node.frontmatter.tags || [];
+    for (const tag of tags) {
+      const found = getNodes().find(
+        node => node.internal.type === 'Tag' && node.name === tag,
+      );
+
+      if (typeof found === 'undefined') {
+        await createNode({
+          name: tag,
+          id: createNodeId(`Tag-${tag}`),
+          internal: {
+            type: 'Tag',
+            contentDigest: createContentDigest(tag),
+          },
+        });
+      }
+    }
   }
 };
 
@@ -47,6 +66,11 @@ exports.createPages = async ({ graphql, actions }) => {
       allCategory {
         nodes {
           url: relativePath
+        }
+      }
+      allTag {
+        nodes {
+          name
         }
       }
       allMarkdownRemark {
@@ -71,7 +95,7 @@ exports.createPages = async ({ graphql, actions }) => {
   result.data.allCategory.nodes.forEach(node => {
     createPage({
       path: toEncode(node.url),
-      component: path.resolve('./src/templates/PostList.jsx'),
+      component: path.resolve('./src/templates/Category.jsx'),
       context: {
         slug: toRegexStr(node.url),
       },
@@ -85,6 +109,17 @@ exports.createPages = async ({ graphql, actions }) => {
       component: path.resolve('./src/templates/Post.jsx'),
       context: {
         slug: node.fields.url,
+      },
+    });
+  });
+
+  //테그 페이지 생성
+  result.data.allTag.nodes.forEach(({ name }) => {
+    createPage({
+      path: `/Tags/${name}`,
+      component: path.resolve('./src/templates/Tag.jsx'),
+      context: {
+        slug: name,
       },
     });
   });

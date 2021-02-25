@@ -28,7 +28,7 @@ const Post = ({ data }) => {
 
   return (
     <BlogLayout>
-      <Category pathes={pathes} />
+      <Category medium pathes={pathes} />
       <Typography variant="h3">{post.frontmatter.title}</Typography>
       <Typography align="right" variant="subtitle2">
         <CalendarTodayIcon fontSize="inherit" />
