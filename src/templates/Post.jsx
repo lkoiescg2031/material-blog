@@ -3,8 +3,10 @@ import { graphql } from 'gatsby';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import Divider from '@material-ui/core/Divider';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
@@ -13,6 +15,9 @@ import Category from '../components/Category';
 import Tags from '../components/Tags';
 
 const usePostStyle = makeStyles(theme => ({
+  cardRoot: {
+    margin: `0 ${theme.spacing(10)}px`,
+  },
   titleDivider: {
     marginTop: theme.spacing(0.5),
     marginBottom: theme.spacing(0.5),
@@ -29,14 +34,18 @@ const Post = ({ data }) => {
   return (
     <BlogLayout>
       <Category medium pathes={pathes} />
-      <Typography variant="h3">{post.frontmatter.title}</Typography>
-      <Typography align="right" variant="subtitle2">
-        <CalendarTodayIcon fontSize="inherit" />
-        {new Date(post.frontmatter.date).toLocaleDateString()}
-      </Typography>
-      <Divider classes={{ root: classes.titleDivider }} />
-      <Tags align="right" tags={post.frontmatter.tags} />
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      <Card elevation={4} classes={{ root: classes.cardRoot }}>
+        <CardContent>
+          <Typography variant="h3">{post.frontmatter.title}</Typography>
+          <Typography align="right" variant="subtitle2">
+            <CalendarTodayIcon fontSize="inherit" />
+            {new Date(post.frontmatter.date).toLocaleDateString()}
+          </Typography>
+          <Divider classes={{ root: classes.titleDivider }} />
+          <Tags align="right" tags={post.frontmatter.tags} />
+          <div dangerouslySetInnerHTML={{ __html: post.html }} />
+        </CardContent>
+      </Card>
     </BlogLayout>
   );
 };
