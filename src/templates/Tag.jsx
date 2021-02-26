@@ -42,7 +42,10 @@ const PostList = ({ data, path, pageContext }) => {
 
 export const query = graphql`
   query allPostByTag($slug: [String]) {
-    allMarkdownRemark(filter: { frontmatter: { tags: { in: $slug } } }) {
+    allMarkdownRemark(
+      filter: { frontmatter: { tags: { in: $slug } } }
+      sort: { fields: frontmatter___date, order: DESC }
+    ) {
       nodes {
         fields {
           slug

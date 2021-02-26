@@ -44,7 +44,10 @@ const PostList = ({ data, path }) => {
 
 export const query = graphql`
   query allPostByCategory($slug: String!) {
-    allMarkdownRemark(filter: { fields: { slug: { regex: $slug } } }) {
+    allMarkdownRemark(
+      filter: { fields: { slug: { regex: $slug } } }
+      sort: { fields: frontmatter___date, order: DESC }
+    ) {
       nodes {
         fields {
           slug
