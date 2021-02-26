@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 
 import BlogLayout from '../layout/BlogLayout';
 import Post from '../components/Post';
-import Category from '../components/Category';
 
 const usePostListStyle = makeStyles(theme => ({
   postCounterRoot: {
@@ -52,6 +51,14 @@ export const query = graphql`
           title
           tags
           date
+          featuredImage {
+            childImageSharp {
+              fluid {
+                originalImg
+                originalName
+              }
+            }
+          }
         }
         html
       }

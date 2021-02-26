@@ -24,9 +24,14 @@ module.exports = class CategoryBuilder {
   }
 
   getAllPostsPath() {
-    return this.getNodesByType('File')
-      .filter(file => file.sourceInstanceName === 'posts')
-      .map(posts => posts.absolutePath);
+    const allNodes = this.getNodesByType('File');
+    const allPosts = allNodes.filter(
+      file =>
+        file.sourceInstanceName === 'posts' &&
+        ['.md', '.mdx'].includes(file.ext),
+    );
+
+    return allPosts.map(posts => posts.absolutePath);
   }
 
   extractCategory(postPath, categoryMaps) {

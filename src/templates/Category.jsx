@@ -53,6 +53,14 @@ export const query = graphql`
           title
           tags
           date
+          featuredImage {
+            childImageSharp {
+              fluid {
+                originalImg
+                originalName
+              }
+            }
+          }
         }
         html
       }

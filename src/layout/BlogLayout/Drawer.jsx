@@ -200,21 +200,21 @@ function BlogLayoutDrawer(props) {
             </div>
           </div>
           <Divider />
-          {(function renderPosts(nodes, level = 0) {
-            return nodes.map(node => (
-              <React.Fragment key={node.url}>
+          {(function renderPosts(root, level = 0) {
+            return (
+              <React.Fragment key={root.url}>
                 <PostsButton
-                  name={node.name}
-                  info={node.postsCnt}
-                  url={node.url}
+                  name={root.name}
+                  info={root.postsCnt}
+                  url={root.url}
                   level={level}
                 />
-                {Array.isArray(node.childrenCategory)
-                  ? renderPosts(node.childrenCategory, level + 1)
+                {Array.isArray(root.children)
+                  ? root.children.map(child => renderPosts(child, level + 1))
                   : null}
               </React.Fragment>
-            ));
-          })([categories])}
+            );
+          })(categories)}
           <Divider />
           <Button>Tags</Button>
           <Tags align="center" tags={tags} />

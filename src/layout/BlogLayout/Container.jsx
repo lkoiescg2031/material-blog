@@ -14,21 +14,19 @@ export default props => (
               postsCnt
               url: relativePath
               absolutePath
-              childrenCategory {
-                name
-                postsCnt
-                url: relativePath
-                absolutePath
-                childrenCategory {
+              children {
+                ... on Category {
                   name
                   postsCnt
                   url: relativePath
                   absolutePath
-                  childrenCategory {
-                    name
-                    postsCnt
-                    relativePath
-                    absolutePath
+                  children {
+                    ... on Category {
+                      name
+                      postsCnt
+                      url: relativePath
+                      absolutePath
+                    }
                   }
                 }
               }
