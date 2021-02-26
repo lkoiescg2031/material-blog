@@ -21,9 +21,6 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     padding: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
   },
   title: {
     flexGrow: 1,

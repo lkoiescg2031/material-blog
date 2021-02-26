@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { navigate } from 'gatsby';
-import clsx from 'clsx';
-
 import { makeStyles } from '@material-ui/core/styles';
 
-import Drawer from '@material-ui/core/Drawer';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 
-import Hidden from '@material-ui/core/Hidden';
-
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -39,6 +32,7 @@ const usePostsButtonStyle = makeStyles(theme => ({
     alignItems: 'center',
     padding: theme.spacing(0.5, 0.5),
     textAlign: 'left',
+    textTransform: 'none',
   },
   text: {
     fontWeight: 'inherit',
@@ -52,12 +46,12 @@ const usePostsButtonStyle = makeStyles(theme => ({
 const PostsButton = ({ name, info, level, url }) => {
   const classes = usePostsButtonStyle();
   return (
-    <ButtonBase classes={{ root: classes.root }} onClick={e => navigate(url)}>
+    <Button classes={{ root: classes.root }} href={url}>
       <Typography className={classes.text} variant="body1">
         {`${level > 0 ? '└'.padEnd(level, '─') : ''}\t${name}`}
       </Typography>
       <Chip size="small" variant="outlined" label={info} />
-    </ButtonBase>
+    </Button>
   );
 };
 
@@ -124,136 +118,123 @@ const useStyles = makeStyles(theme => ({
 function BlogLayoutDrawer(props) {
   const classes = useStyles();
 
-  const drawerItems = (toggleDrawer, profile, categories, tags = []) => (
-    <>
-      <div className={classes.toolbar}>
-        <IconButton className={classes.closeButton} onClick={toggleDrawer}>
-          <ArrowBackIosIcon />
-        </IconButton>
-      </div>
-      <Divider />
-      {profile && (
-        <>
-          <div className={classes.profileRoot}>
-            <Avatar
-              alt={profile.name}
-              src={profile.figure}
-              className={classes.avatar}
-            >
-              {typeof profile.figure === 'undefined' ? profile.name : null}
-            </Avatar>
-            <Typography variant="h6" color="inherit">
-              {profile.name}
-            </Typography>
-            <Typography variant="body2" color="inherit">
-              {profile.desc}
-            </Typography>
-            <div className={classes.contactWrapper}>
-              {profile.email && (
-                <IconButton
-                  className={classes.contactIcon}
-                  href={`mailto:${profile.email}`}
-                >
-                  <EmailIcon />
-                </IconButton>
-              )}
-              {profile.github && (
-                <IconButton
-                  className={classes.contactIcon}
-                  href={profile.github}
-                >
-                  <GithubIcon />
-                </IconButton>
-              )}
-              {profile.facebook && (
-                <IconButton
-                  className={classes.contactIcon}
-                  href={profile.facebook}
-                >
-                  <FacebookIcon />
-                </IconButton>
-              )}
-              {profile.twitter && (
-                <IconButton
-                  className={classes.contactIcon}
-                  href={profile.twitter}
-                >
-                  <TwitterIcon />
-                </IconButton>
-              )}
-              {profile.instagram && (
-                <IconButton
-                  className={classes.contactIcon}
-                  href={profile.instagram}
-                >
-                  <InstagramIcon />
-                </IconButton>
-              )}
-              {profile.linkedIn && (
-                <IconButton
-                  className={classes.contactIcon}
-                  href={profile.linkedIn}
-                >
-                  <LinkedInIcon />
-                </IconButton>
-              )}
-            </div>
-          </div>
-          <Divider />
-          {(function renderPosts(root, level = 0) {
-            return (
-              <React.Fragment key={root.url}>
-                <PostsButton
-                  name={root.name}
-                  info={root.postsCnt}
-                  url={root.url}
-                  level={level}
-                />
-                {Array.isArray(root.children)
-                  ? root.children.map(child => renderPosts(child, level + 1))
-                  : null}
-              </React.Fragment>
-            );
-          })(categories)}
-          <Divider />
-          <Button>Tags</Button>
-          <Tags align="center" tags={tags} />
-          <Divider />
-        </>
-      )}
-    </>
-  );
   return (
     <Consumer>
       {({ isOpenDrawer, toggleDrawer, profile, categories, tags }) => (
         <nav>
-          <Hidden smUp implementation="css">
-            <SwipeableDrawer
-              anchor="left"
-              className={classes.drawer}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              open={isOpenDrawer}
-              onOpen={toggleDrawer}
-              onClose={toggleDrawer}
-            >
-              {drawerItems(toggleDrawer, profile, categories)}
-            </SwipeableDrawer>
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Drawer
-              variant="permanent"
-              ancher="left"
-              className={classes.drawer}
-              classes={{
-                paper: clsx(classes.drawerPaper, classes.transParentBackground),
-              }}
-              open
-            >
-              {drawerItems(toggleDrawer, profile, categories, tags)}
-            </Drawer>
-          </Hidden>
+          <SwipeableDrawer
+            anchor="left"
+            className={classes.drawer}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            open={isOpenDrawer}
+            onOpen={toggleDrawer}
+            onClose={toggleDrawer}
+          >
+            <div className={classes.toolbar}>
+              <IconButton
+                className={classes.closeButton}
+                onClick={toggleDrawer}
+              >
+                <ArrowBackIosIcon />
+              </IconButton>
+            </div>
+            <Divider />
+            {profile && (
+              <>
+                <div className={classes.profileRoot}>
+                  <Avatar
+                    alt={profile.name}
+                    src={profile.figure}
+                    className={classes.avatar}
+                  >
+                    {typeof profile.figure === 'undefined'
+                      ? profile.name
+                      : null}
+                  </Avatar>
+                  <Typography variant="h6" color="inherit">
+                    {profile.name}
+                  </Typography>
+                  <Typography variant="body2" color="inherit">
+                    {profile.desc}
+                  </Typography>
+                  <div className={classes.contactWrapper}>
+                    {profile.email && (
+                      <IconButton
+                        className={classes.contactIcon}
+                        href={`mailto:${profile.email}`}
+                      >
+                        <EmailIcon />
+                      </IconButton>
+                    )}
+                    {profile.github && (
+                      <IconButton
+                        className={classes.contactIcon}
+                        href={profile.github}
+                      >
+                        <GithubIcon />
+                      </IconButton>
+                    )}
+                    {profile.facebook && (
+                      <IconButton
+                        className={classes.contactIcon}
+                        href={profile.facebook}
+                      >
+                        <FacebookIcon />
+                      </IconButton>
+                    )}
+                    {profile.twitter && (
+                      <IconButton
+                        className={classes.contactIcon}
+                        href={profile.twitter}
+                      >
+                        <TwitterIcon />
+                      </IconButton>
+                    )}
+                    {profile.instagram && (
+                      <IconButton
+                        className={classes.contactIcon}
+                        href={profile.instagram}
+                      >
+                        <InstagramIcon />
+                      </IconButton>
+                    )}
+                    {profile.linkedIn && (
+                      <IconButton
+                        className={classes.contactIcon}
+                        href={profile.linkedIn}
+                      >
+                        <LinkedInIcon />
+                      </IconButton>
+                    )}
+                  </div>
+                </div>
+                <Divider />
+                {(function renderPosts(root, level = 0) {
+                  return (
+                    <React.Fragment key={root.url}>
+                      <PostsButton
+                        name={root.name}
+                        info={root.postsCnt}
+                        url={root.url}
+                        level={level}
+                      />
+                      {Array.isArray(root.children)
+                        ? root.children.map(child =>
+                            renderPosts(child, level + 1),
+                          )
+                        : null}
+                    </React.Fragment>
+                  );
+                })(categories)}
+                <Divider />
+                <Button href="/Tags">Tags</Button>
+                <Tags align="center" tags={tags} />
+                <Divider />
+              </>
+            )}
+          </SwipeableDrawer>
         </nav>
       )}
     </Consumer>

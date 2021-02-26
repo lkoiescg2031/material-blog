@@ -10,7 +10,7 @@ import WaveBackgroundAni from '../../components/WaveAniBackground';
 
 import { Provider } from './Context';
 import AppBar from './AppBar';
-import Drawer, { drawerWidth } from './Drawer';
+import Drawer from './Drawer';
 
 class BlogLayout extends React.PureComponent {
   static propTypes = {
@@ -118,8 +118,5 @@ export default withStyles(theme => ({
   content: {
     width: '100%',
     padding: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: drawerWidth,
-    },
   },
 }))(BlogLayout);
