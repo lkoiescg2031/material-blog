@@ -33,6 +33,7 @@ const usePostStyle = makeStyles(theme => ({
 
 function Post({ post }) {
   const classes = usePostStyle();
+  const descLen = 150 + (post.frontmatter.featuredImage ? 0 : 350);
   return (
     <Card elevation={3} classes={{ root: classes.cardRoot }}>
       <CardHeader
@@ -57,8 +58,8 @@ function Post({ post }) {
         />
       )}
       <CardContent>
-        <Typography>
-          {post.html.replace(/<[^>]*>?/gm, '').substring(0, 150)}
+        <Typography variant="body2">
+          {post.html.replace(/<[^>]*>?/gm, '').substring(0, descLen)}
         </Typography>
       </CardContent>
       <CardActions>

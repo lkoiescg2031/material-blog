@@ -50,7 +50,7 @@ Pellentesque consectetur facilisis venenatis. Nam ullamcorper, orci nec tempor h
 
 Mauris dictum neque non fermentum consectetur. Integer vel pellentesque ex, ut tincidunt quam. Sed ac orci a dolor venenatis vulputate. Sed sollicitudin, turpis ac malesuada dapibus, magna dui semper orci, in congue justo felis quis ante. Phasellus consequat et dolor fringilla accumsan. Pellentesque ullamcorper porttitor dolor et imperdiet.
 
-```javascript
+```javascript{numberLines: 36}
 $(document).ready(function() {
     console.log('More jQuery, wow!')
 })
