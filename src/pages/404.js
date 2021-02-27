@@ -3,7 +3,7 @@ import React from 'react';
 import WarningIcon from '@material-ui/icons/WarningRounded';
 
 import BlogLayout from '../layout/BlogLayout';
-import BreakOutGame from '../components/BreakoutGame';
+import BreakOutGame from '@lkoiescg2031/react-breakout';
 
 import SEO from '../components/seo';
 
