@@ -26,7 +26,12 @@ const PostList = ({ data, path, pageContext }) => {
 
   return (
     <BlogLayout>
-      <Typography variant="h3">{pageContext.slug}</Typography>
+      <div>
+        <Typography align="right" variant="caption">
+          Tag
+        </Typography>
+        <Typography variant="h4">{pageContext.slug}</Typography>
+      </div>
       <Typography
         classes={{ root: classes.postCounterRoot }}
         varient="subtitle2"
