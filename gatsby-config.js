@@ -9,7 +9,7 @@ module.exports = {
         'https://avatars3.githubusercontent.com/u/42562726?s=400&u=611e46e8fb672c2be8df5c50ad9f2e5c3a35cbbf&v=4',
       position: 'developer',
       email: 'lkoiescg2031@naver.com',
-      blog: 'https://lkoiescg2031.github.io',
+      blog: 'https://lkoiescg2031.netlify.app',
       github: 'https://github.com/lkoiescg2031',
       facebook: 'https://www.facebook.com/profile.php?id=100015452532299',
       twitter: '',
