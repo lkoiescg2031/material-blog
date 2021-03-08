@@ -6,7 +6,7 @@ import color from '../../styles/color';
 import { Consumer, clickHandler } from './context';
 
 import ProfileIcon from './ProfileIcon';
-import Inline from '../Inline';
+import Inline from './Inline';
 
 const CardTemplate2 = ({
   name,

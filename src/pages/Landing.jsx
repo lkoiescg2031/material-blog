@@ -12,7 +12,7 @@ const LandingPage = ({ data }) => {
   const { user } = siteMetadata;
 
   const moveToHome = () => {
-    navigate('/Home');
+    navigate('/Posts');
   };
 
   return (
