@@ -61,4 +61,5 @@ javascript, typescript, reactjs, gatsbyjs, graphql,
 
 ## Change Log
   2021.01.11        블로그 저장소 생성
-  2021.01.12 ~ now  블로그 시작 페이지 구상 구현
+  2021.01.12 ~ 2021.02.25 블로그 포스팅 기능 작업완료
+  2021.03.08        블로그 생성
