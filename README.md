@@ -1,5 +1,9 @@
 # 블로그 레포
 
+## 사용 기술
+
+javascript, typescript, reactjs, gatsbyjs, graphql, 
+
 ## 블로그 기능 명세
 
 ### Landing Page
