@@ -16,7 +16,7 @@ const LandingPage = ({ data }) => {
   };
 
   return (
-    <MouseEffectLayout>
+    <div>
       <BusinessCard>
         <CardTemplate1
           title={siteMetadata.title}
@@ -40,7 +40,7 @@ const LandingPage = ({ data }) => {
           homeButtonCallback={moveToHome}
         />
       </BusinessCard>
-    </MouseEffectLayout>
+    </div>
   );
 };
 
