@@ -2635,10 +2635,10 @@
     "@babel/runtime" "^7.7.2"
     regenerator-runtime "^0.13.3"
 
-"@lkoiescg2031/react-breakout@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@lkoiescg2031/react-breakout/-/react-breakout-0.1.0.tgz#1d6e9a6e7845bb04f5aadf6e19bc89b3dd5fe8ec"
-  integrity sha512-YUCe2BFNYbrGeMUjOUIzSG1Jj2EQ0SkK1sjmJWekFZzjpe5v38aE0Y/JAOdQlqiF84/S0ibxD/yzuF+Bk7V3cA==
+"@lkoiescg2031/react-breakout@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@lkoiescg2031/react-breakout/-/react-breakout-0.1.1.tgz#fecf900aa552f81a6669ed3ce76d958c259da012"
+  integrity sha512-ktHuQgYPupEqs6/Gc7wihZt6m4HGaw1DiIBB2EotpD44b8WqbgF0bURJTSf+OtXTAPfeRluqH1pHU6cYaGkP3A==
   dependencies:
     "@testing-library/jest-dom" "^5.11.4"
     "@testing-library/react" "^11.1.0"
